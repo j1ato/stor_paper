@@ -1,16 +1,8 @@
 # stor_paper
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+- Wallpaper and short stories app
+- minimal design to showcase artwork and writing
+- user sign in with firebase to allow for favorites to be stored
+- maintains reading location between restarts
+- allows the purchase of volumes that consist of a set of stories and artworks
+- users can download the artwork they like and set it as a wallpaper
