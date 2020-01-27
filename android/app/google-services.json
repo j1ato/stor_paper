@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "83919365720",
+    "firebase_url": "https://storpaper-457f6.firebaseio.com",
+    "project_id": "storpaper-457f6",
+    "storage_bucket": "storpaper-457f6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:83919365720:android:aea668655abd2aa4",
+        "android_client_info": {
+          "package_name": "com.panthony.stor_paper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "83919365720-beskdbsapebulj3p0l7giejp82udgqn1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEG6cPQ2ZZjnkEAv_MEZLmv-jwT1VxX-Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "83919365720-beskdbsapebulj3p0l7giejp82udgqn1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "83919365720-v9g6t4eap8bmoqsv5d4i02jg8fquucam.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.panthony.storPaper"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
