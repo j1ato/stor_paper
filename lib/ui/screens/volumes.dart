@@ -19,7 +19,7 @@ class VolumesCardList extends StatefulWidget {
 }
 
 class _VolumesCardListState extends State<VolumesCardList> {
-  Volume collection;
+  Volume volumeCollection;
 
   CollectionReference collectionReference =
       Firestore.instance.collection('Volumes');
@@ -55,14 +55,14 @@ class _VolumesCardListState extends State<VolumesCardList> {
             itemCount: snapshot.data.documents.length,
             itemBuilder: (context, index) {
               final volume = snapshot.data.documents[index];
-              collection = Volume.fromMap(volume.data, volume.documentID);
+              volumeCollection = Volume.fromMap(volume.data, volume.documentID);
               return VolumesCard(
                 controller: _controller,
-                volumeTitle: collection.volumeTitle,
-                image: collection.image,
-                numberOfStories: collection.numberOfStories,
-                stories: collection.stories,
-                productID: collection.productID,
+                volumeTitle: volumeCollection.volumeTitle,
+                image: volumeCollection.image,
+                numberOfStories: volumeCollection.numberOfStories,
+                stories: volumeCollection.stories,
+                productID: volumeCollection.productID,
               );
             },
           );
