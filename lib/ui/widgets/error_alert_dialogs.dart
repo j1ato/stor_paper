@@ -14,7 +14,7 @@ class ErrorAlertDialog extends StatelessWidget {
       content: Container(
         child: Text(
           errorMessage,
-          style: buildTheme().textTheme.body2,
+          style: buildTheme().textTheme.bodyText2,
         ),
       ),
       actions: <Widget>[

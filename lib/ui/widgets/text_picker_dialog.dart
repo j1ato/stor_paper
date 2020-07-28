@@ -72,7 +72,7 @@ class _TextSizePickerDialogState extends State<TextSizePickerDialog> {
             },
             child: Text(
               'SET',
-              style: buildTheme().textTheme.body2,
+              style: buildTheme().textTheme.bodyText2,
             ))
       ],
     );

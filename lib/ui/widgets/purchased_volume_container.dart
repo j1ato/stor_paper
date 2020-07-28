@@ -5,26 +5,41 @@ import 'package:stor_paper/ui/screens/stories.dart';
 import 'collection_expand_button.dart';
 import 'info_button.dart';
 
-class PurchasedVolumeContainer extends StatelessWidget {
-
+class PurchasedVolumeContainer extends StatefulWidget {
   const PurchasedVolumeContainer({
     this.imageUrl,
     this.volumeTitle,
     this.numberOfStories,
     this.stories,
+    this.state,
   });
 
   final String imageUrl;
   final String volumeTitle;
   final String numberOfStories;
   final List<Map> stories;
+  final bool state;
 
   @override
+  _PurchasedVolumeContainerState createState() =>
+      _PurchasedVolumeContainerState();
+}
+
+class _PurchasedVolumeContainerState extends State<PurchasedVolumeContainer> {
+  @override
   CachedNetworkImage build(BuildContext context) {
+
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
-    final containerHeight = 0.95 * screenHeight;
-    final containerWidth = 0.98 * screenWidth;
+    final containerHeight =
+        widget.state ? 0.75 * screenHeight : 0.65 * screenHeight;
+    final containerWidth =
+        widget.state ? 0.92 * screenWidth : 0.9 * screenWidth;
+    final double blur = widget.state ? 30 : 0;
+    final double offset = widget.state ? 5 : 0;
+    final imageState = widget.state
+        ? null
+        : const ColorFilter.mode(Color(0xF0454141), BlendMode.darken);
 
     return CachedNetworkImage(
       useOldImageOnUrlChange: true,
@@ -33,66 +48,75 @@ class PurchasedVolumeContainer extends StatelessWidget {
       ),
       placeholder: (context, placehldr) => Align(
         alignment: Alignment.center,
-        child: Container(
+        child: AnimatedContainer(
           height: containerHeight,
           width: containerWidth,
+          duration: const Duration(milliseconds: 1000),
+          curve: Curves.easeOutQuint,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(6),
             color: Colors.white.withOpacity(0.1),
           ),
         ),
       ),
-      imageUrl: imageUrl,
+      imageUrl: widget.imageUrl,
       imageBuilder: (context, imageProvider) {
-        return Stack(
-          children: [
-            Align(
-              alignment: Alignment.center,
-              child: Hero(
-                tag: 'collection wallpaper',
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(6),
-                  child: Container(
-                    height: containerHeight,
-                    width: containerWidth,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: imageProvider, fit: BoxFit.fill),
-                    ),
-                    child: Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(6),
-                        splashColor: Colors.white.withOpacity(0.2),
-                        highlightColor: Colors.black.withOpacity(0.8),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) {
-                              return StoriesScreen(
-                                key: PageStorageKey(volumeTitle),
-                                volumeTitle: volumeTitle,
-                                stories: stories,
-                                // collection: widget.collection,
-                              );
-                            }),
-                          );
-                        },
-                      ),
+        return Center(
+          child: Stack(
+            children: [
+              Hero(
+                tag: widget.volumeTitle,
+                child: AnimatedContainer(
+                  height: containerHeight,
+                  width: containerWidth,
+                  duration: const Duration(milliseconds: 450),
+                  curve: Curves.decelerate,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.grey[850].withOpacity(0.5),
+                          blurRadius: blur,
+                          offset: Offset(offset, offset))
+                    ],
+                    image: DecorationImage(
+                        image: imageProvider,
+                        fit: BoxFit.fill,
+                        colorFilter: imageState),
+                  ),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(6),
+                      splashColor: Colors.white.withOpacity(0.2),
+                      highlightColor: Colors.black.withOpacity(0.8),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) {
+                            return StoriesScreen(
+                              key: PageStorageKey(widget.volumeTitle),
+                              stories: widget.stories,
+                              volumeTitle: widget.volumeTitle,
+                            );
+                          }),
+                        );
+                      },
                     ),
                   ),
                 ),
               ),
-            ),
-            InfoButton(
-              title: volumeTitle,
-              info: numberOfStories,
-              context: context,
-            ),
-            ExpandButton(
-              imageURL: imageUrl,
-            )
-          ],
+              InfoButton(
+                title: widget.volumeTitle,
+                info: widget.numberOfStories,
+                context: context,
+              ),
+              ExpandButton(
+                imageURL: widget.imageUrl,
+                volumeTitle: widget.volumeTitle,
+              )
+            ],
+          ),
         );
       },
     );

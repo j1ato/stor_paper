@@ -1,37 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:stor_paper/ui/widgets/stories_card.dart';
 import 'package:stor_paper/ui/theme.dart';
-import 'package:stor_paper/utils/user_repository.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 // builds an animated listview of custom containers 
 // that represent individual stories and wallpapers
  
 
-class StoriesScreen extends StatefulWidget {
-  const StoriesScreen({Key key, this.stories, this.volumeTitle, this.artworks})
-      : super(key: key);
+class StoriesScreen extends StatelessWidget {
+    StoriesScreen({
+    Key key,
+    this.stories,
+    this.volumeTitle
+  }): super(key: key);
 
-  static String id = 'storyChooser';
-
-  final List<Map> stories;
-  final Map artworks;
+  final List<Map > stories;
   final String volumeTitle;
 
-  static final UserRepository user = UserRepository.instance();
+  static String id = 'storiesScreen';
 
-  @override
-  _StoriesScreenState createState() => _StoriesScreenState();
-}
-
-class _StoriesScreenState extends State<StoriesScreen> {
   final ScrollController _scrollController = ScrollController();
-  final CollectionReference collectionReference =
-      Firestore.instance.collection('users');
-
-  Stream<QuerySnapshot> streamSnapshots;
-
   @override
   Widget build(BuildContext context) {
     Padding _buildStories() {
@@ -43,7 +31,7 @@ class _StoriesScreenState extends State<StoriesScreen> {
             physics: const BouncingScrollPhysics(
                 parent: AlwaysScrollableScrollPhysics()),
             key: const PageStorageKey(1),
-            itemCount: widget.stories.length,
+            itemCount: stories.length,
             separatorBuilder: (context, index) => const SizedBox(
               height: 30,
             ),
@@ -56,7 +44,7 @@ class _StoriesScreenState extends State<StoriesScreen> {
                   child: FadeInAnimation(
                     child: StoriesCard(
                       scrollController: _scrollController,
-                      stories: widget.stories[index],
+                      stories: stories[index],
                       context: context,
                     ),
                   ),
@@ -85,8 +73,8 @@ class _StoriesScreenState extends State<StoriesScreen> {
                 ),
                 expandedHeight: 50,
                 title: Text(
-                  widget.volumeTitle,
-                  style: buildTheme().textTheme.display1,
+                  volumeTitle,
+                  style: buildTheme().textTheme.headline1,
                 ),
                 centerTitle: true,
               )

@@ -11,9 +11,11 @@ import 'package:stor_paper/ui/widgets/wallpaper_download_button.dart';
 class DownloadWallpaper extends StatefulWidget {
   const DownloadWallpaper({
     this.imageString,
+    this.volumeTitle,
   });
   static String id = 'setWallpaper';
   final String imageString;
+  final String volumeTitle;
   @override
   _DownloadWallpaperState createState() => _DownloadWallpaperState();
 }
@@ -48,7 +50,7 @@ class _DownloadWallpaperState extends State<DownloadWallpaper> {
               imageUrl: widget.imageString,
               imageBuilder: (context, imageProvider) {
                 return Hero(
-                  tag: 'collection wallpaper',
+                  tag: widget.volumeTitle,
                   child: Container(
                     decoration: BoxDecoration(
                       image: DecorationImage(

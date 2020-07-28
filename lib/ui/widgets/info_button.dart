@@ -20,8 +20,9 @@ class InfoButton extends StatelessWidget {
     final pageWidth = MediaQuery.of(context).size.width;
 
     return Positioned(
-      bottom: type == 'story card' ? 1 : pageHeight * 0.005,
+      bottom: type == 'story card' ? 1 : pageHeight * 0.01,
       right: type == 'story card' ? 1 : pageWidth * 0.02,
+
       child: RawMaterialButton(
         constraints: const BoxConstraints(minWidth: 25, minHeight: 25),
         onPressed: () => showDialog<void>(
@@ -36,7 +37,7 @@ class InfoButton extends StatelessWidget {
               child: Center(
                   child: Text(
                 title,
-                style: buildTheme().textTheme.subtitle,
+                style: buildTheme().textTheme.subtitle1,
               )),
             ),
             contentPadding: const EdgeInsets.symmetric(horizontal: 10),
@@ -48,7 +49,7 @@ class InfoButton extends StatelessWidget {
                   width: pageWidth * 0.94,
                   child: Text(
                     info,
-                    style: buildTheme().textTheme.body2,
+                    style: buildTheme().textTheme.bodyText2,
                   ),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(2),

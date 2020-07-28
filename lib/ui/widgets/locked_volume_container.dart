@@ -5,28 +5,40 @@ import 'package:stor_paper/ui/widgets/volume_purchase_dialog.dart';
 
 import 'info_button.dart';
 
-// variation of volume container if the user hasn't purchased it 
+// variation of volume container if the user hasn't purchased it
 
-class LockedVolumeContainer extends StatelessWidget {
-  const LockedVolumeContainer(
-      {this.imageUrl,
-      this.volumeTitle,
-      this.numberOfStories,
-      this.stories,
-      this.prodDetails});
+class LockedVolumeContainer extends StatefulWidget {
+  const LockedVolumeContainer({
+    this.imageUrl,
+    this.volumeTitle,
+    this.numberOfStories,
+    this.stories,
+    this.prodDetails,
+    this.state,
+  });
 
   final String imageUrl;
   final String volumeTitle;
   final String numberOfStories;
   final List<Map> stories;
   final ProductDetails prodDetails;
+  final bool state;
 
+  @override
+  _LockedVolumeContainerState createState() => _LockedVolumeContainerState();
+}
+
+class _LockedVolumeContainerState extends State<LockedVolumeContainer> {
   @override
   Stack build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
-    final containerHeight = 0.95 * screenHeight;
-    final containerWidth = 0.98 * screenWidth;
+    final containerHeight =
+        widget.state ? 0.75 * screenHeight : 0.65 * screenHeight;
+    final containerWidth =
+        widget.state ? 0.92 * screenWidth : 0.9 * screenWidth;
+    final double blur = widget.state ? 30 : 0;
+    final double offset = widget.state ? 5 : 0;
 
     return Stack(
       children: <Widget>[
@@ -35,43 +47,53 @@ class LockedVolumeContainer extends StatelessWidget {
           child: CachedNetworkImage(
             placeholder: (context, placehldr) => Align(
               alignment: Alignment.center,
-              child: Container(
+              child: AnimatedContainer(
                 height: containerHeight,
                 width: containerWidth,
+                duration: const Duration(milliseconds: 1000),
+                curve: Curves.easeOutQuint,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(6),
                   color: Colors.white.withOpacity(0.1),
                 ),
               ),
             ),
-            imageUrl: imageUrl,
+            imageUrl: widget.imageUrl,
             imageBuilder: (context, imageProvider) {
-              return Container(
-                height: containerHeight,
-                width: containerWidth,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(6),
-                  image: DecorationImage(
-                    image: imageProvider,
-                    colorFilter: ColorFilter.mode(
-                        Colors.black.withOpacity(0.8), BlendMode.darken),
-                    fit: BoxFit.cover,
+              return Center(
+                child: Container(
+                  height: containerHeight,
+                  width: containerWidth,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.grey[850].withOpacity(0.5),
+                          blurRadius: blur,
+                          offset: Offset(offset, offset))
+                    ],
+                    image: DecorationImage(
+                      image: imageProvider,
+                      colorFilter: ColorFilter.mode(
+                          Colors.black.withOpacity(0.8), BlendMode.darken),
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                ),
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(6),
-                    splashColor: Colors.white.withOpacity(0.2),
-                    highlightColor: Colors.black.withOpacity(0.8),
-                    onTap: () => showDialog<void>(
-                      context: context,
-                      builder: (context) {
-                        return VolumePurchaseDialog(
-                          volumeTitle: volumeTitle,
-                          prod: prodDetails,
-                        );
-                      },
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(6),
+                      splashColor: Colors.white.withOpacity(0.2),
+                      highlightColor: Colors.black.withOpacity(0.8),
+                      onTap: () => showDialog<void>(
+                        context: context,
+                        builder: (context) {
+                          return VolumePurchaseDialog(
+                            volumeTitle: widget.volumeTitle,
+                            prod: widget.prodDetails,
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ),
@@ -80,8 +102,8 @@ class LockedVolumeContainer extends StatelessWidget {
           ),
         ),
         InfoButton(
-          title: volumeTitle,
-          info: numberOfStories,
+          title: widget.volumeTitle,
+          info: widget.numberOfStories,
           context: context,
         ),
         Align(

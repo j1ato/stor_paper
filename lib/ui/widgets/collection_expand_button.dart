@@ -5,9 +5,10 @@ import 'package:stor_paper/ui/screens/volume_wallpaper_download.dart';
 // to fullscreen view of volume artwork
 
 class ExpandButton extends StatelessWidget {
-  const ExpandButton({@required this.imageURL});
+  const ExpandButton({@required this.imageURL, @required this.volumeTitle});
 
   final String imageURL;
+  final String volumeTitle;
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +16,9 @@ class ExpandButton extends StatelessWidget {
     final pageWidth = MediaQuery.of(context).size.width;
 
     return Positioned(
-      bottom: pageHeight * 0.005,
+      bottom: pageHeight * 0.01,
       left: pageWidth * 0.02,
+
       child: RawMaterialButton(
         constraints: BoxConstraints.tight(const Size(25, 25)),
         onPressed: () {
@@ -25,6 +27,7 @@ class ExpandButton extends StatelessWidget {
             MaterialPageRoute(
               builder: (context) => DownloadWallpaper(
                 imageString: imageURL,
+                volumeTitle: volumeTitle,
               ),
             ),
           );

@@ -44,83 +44,81 @@ class _OptionsScreenState extends State<OptionsScreen> {
       body: SafeArea(
         child: ListView(
           children: <Widget>[
-            Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                const SizedBox(
-                  height: 10,
-                ),
-                SettingsCard(
-                  onPressed: () {
-                    _launchWebsiteURL();
-                  },
-                  text: 'Meet the creators',
-                ),
-                SettingsCard(
-                  onPressed: () {
-                    _launchInstaURL();
-                  },
-                  text: 'Find us on instagram',
-                ),
-                const SettingsCard(
-                  onPressed: null,
-                  text: 'Terms of usage',
-                ),
-                const SettingsCard(
-                  onPressed: null,
-                  text: 'Privacy policy',
-                ),
-                SettingsCard(
-                  onPressed: () {
-                    return showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          content: Container(
-                            child: Text(
-                              'Are you sure?',
-                              style: buildTheme().textTheme.body2,
-                            ),
-                          ),
-                          actions: <Widget>[
-                            RawMaterialButton(
-                              constraints: const BoxConstraints(
-                                  minWidth: 60, minHeight: 30),
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
+            Container(
+              margin: const EdgeInsets.only(top: 100),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  SettingsCard(
+                    onPressed: _launchWebsiteURL,
+                    text: 'Meet the creators',
+                  ),
+                  SettingsCard(
+                    onPressed: _launchInstaURL,
+                    text: 'Find us on instagram',
+                  ),
+                  const SettingsCard(
+                    onPressed: null,
+                    text: 'Terms of usage',
+                  ),
+                  const SettingsCard(
+                    onPressed: null,
+                    text: 'Privacy policy',
+                  ),
+                  SettingsCard(
+                    onPressed: () {
+                      return showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            content: Container(
                               child: Text(
-                                'NO',
-                                style: buildTheme().textTheme.button,
+                                'Are you sure?',
+                                style: buildTheme().textTheme.bodyText2,
                               ),
                             ),
-                            RawMaterialButton(
-                              constraints: const BoxConstraints(
-                                  minWidth: 60, minHeight: 30),
-                              onPressed: () async {
-                                await user.checkConnectivity();
-                                if (user.isConnected == true) {
-                                  await user.signOut();
+                            actions: <Widget>[
+                              RawMaterialButton(
+                                constraints: const BoxConstraints(
+                                    minWidth: 60, minHeight: 30),
+                                onPressed: () {
                                   Navigator.pop(context);
-                                } else {
-                                  Flushbars()
-                                      .connetivityFlushbar(context);
-                                }
-                              },
-                              child: Text(
-                                'YES',
-                                style: buildTheme().textTheme.button,
+                                },
+                                child: Text(
+                                  'NO',
+                                  style: buildTheme().textTheme.button,
+                                ),
                               ),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  },
-                  text: 'Sign out',
-                ),
-              ],
+                              RawMaterialButton(
+                                constraints: const BoxConstraints(
+                                    minWidth: 60, minHeight: 30),
+                                onPressed: () async {
+                                  await user.checkConnectivity();
+                                  Navigator.pop(context);
+                                  if (user.isConnected == true) {
+                                    await user.signOut();
+                                  } else {
+                                    Flushbars().connetivityFlushbar(context);
+                                  }
+                                },
+                                child: Text(
+                                  'YES',
+                                  style: buildTheme().textTheme.button,
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    text: 'Sign out',
+                  ),
+                ],
+              ),
             ),
           ],
         ),

@@ -1,12 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:stor_paper/utils/firestore.dart';
 import 'package:stor_paper/utils/user_repository.dart';
 
 import 'flushbars.dart';
 
-// when tapped it updates list of favorites and is 
+// when tapped it updates list of favorites and is
 // either an outline or filled in depending
 
 class FavoriteButton extends StatelessWidget {
@@ -20,7 +21,7 @@ class FavoriteButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final userRepository = Provider.of<UserRepository>(context);
 
-    final Stream _userFavorites = Firestore.instance
+    final Stream _userDocument = Firestore.instance
         .collection('users')
         .document(userRepository.user.uid)
         .snapshots();
@@ -30,9 +31,11 @@ class FavoriteButton extends StatelessWidget {
     }
 
     return StreamBuilder(
-      stream: _userFavorites,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
+      stream: _userDocument,
+      builder: (context, userDocument) {
+        if (userDocument.data != null) {
+          final List userFavouritesList = userDocument.data['favorites'];
+
           return RawMaterialButton(
             constraints: BoxConstraints.tight(const Size(25, 25)),
             onPressed: () async {
@@ -44,7 +47,7 @@ class FavoriteButton extends StatelessWidget {
               }
             },
             child: Icon(
-              snapshot.data['favorites'].contains(storyID) == true
+              userFavouritesList.contains(storyID) == true
                   ? Icons.favorite
                   : Icons.favorite_border,
               size: 18,
@@ -55,7 +58,7 @@ class FavoriteButton extends StatelessWidget {
             shape: const CircleBorder(),
           );
         } else {
-          return Container();
+          return SpinKitChasingDots(color: Colors.amber,);
         }
       },
     );

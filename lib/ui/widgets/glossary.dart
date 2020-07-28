@@ -14,8 +14,8 @@ class GlossaryTexts extends StatelessWidget {
     final List<Widget> textElements = [];
 
     for (final String glossaryTextString in glossaryItems) {
-      textElements
-          .add(Text(glossaryTextString, style: buildTheme().textTheme.body1));
+      textElements.add(
+          Text(glossaryTextString, style: buildTheme().textTheme.bodyText1));
       textElements.add(
         const SizedBox(
           height: 20,

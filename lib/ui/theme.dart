@@ -7,27 +7,27 @@ ThemeData buildTheme() {
 
   TextTheme _buildTextTheme(TextTheme base) {
     return base.copyWith(
-      display1: base.display1.copyWith(
+      headline1: base.headline1.copyWith(
           fontFamily: 'Cinzel',
           fontSize: 52,
           color: Colors.white.withOpacity(0.8),
           fontWeight: FontWeight.bold),
-      display2: base.display2.copyWith(
+      headline2: base.headline2.copyWith(
           fontFamily: 'Cinzel',
           fontSize: 22,
           color: Colors.white.withOpacity(0.8),
           fontWeight: FontWeight.bold),
-      subtitle: base.subtitle.copyWith(
+      subtitle1: base.subtitle1.copyWith(
           fontFamily: 'Cinzel',
           fontSize: 18,
           color: Colors.white.withOpacity(0.8),
           fontWeight: FontWeight.bold),
-      body1: base.body1.copyWith(
+      bodyText1: base.bodyText1.copyWith(
         fontFamily: 'Lato',
         fontSize: 16,
         color: Colors.white.withOpacity(0.8),
       ),
-      body2: base.body2.copyWith(
+      bodyText2: base.bodyText2.copyWith(
           fontFamily: 'Lato',
           fontSize: 14,
           color: Colors.white.withOpacity(0.5),
@@ -39,8 +39,9 @@ ThemeData buildTheme() {
       ),
       button: base.button.copyWith(
         fontFamily: 'Lato',
-        fontSize: 12,
+        fontSize: 15,
         color: Colors.white.withOpacity(0.8),
+        fontWeight: FontWeight.w800,
       ),
     );
   }
@@ -48,12 +49,12 @@ ThemeData buildTheme() {
   return base.copyWith(
     textTheme: _buildTextTheme(base.textTheme),
     appBarTheme: AppBarTheme(
-      color: Colors.black12,
+      color: Colors.grey,
       elevation: 0,
     ),
     dialogBackgroundColor: const Color(0xF0111114).withOpacity(0.8),
-    bottomAppBarColor: Colors.black,
-    scaffoldBackgroundColor: const Color(0xF0020202),
+    bottomAppBarColor: const Color(0xF0D7D9E1),
+    scaffoldBackgroundColor: const Color(0xF0D7D9E1),
     buttonColor: const Color(0xF0111114).withOpacity(0.03),
     popupMenuTheme: PopupMenuThemeData(
       color: const Color(0xF0111114),

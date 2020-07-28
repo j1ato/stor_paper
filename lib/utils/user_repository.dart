@@ -148,10 +148,12 @@ class UserRepository extends ChangeNotifier {
       notifyListeners();
       await _auth
           .signInWithEmailAndPassword(email: email, password: password)
-          .then((user) {
+          .then((user) async {
         _user = user;
-        checkEmailVerification(context);
-        if (user != null && _user.isEmailVerified) {
+        await checkEmailVerification(context);
+        if (_user != null && _user.isEmailVerified) {
+          await createFavorites();
+
           _status = Status.authenticated;
           notifyListeners();
         } else {
@@ -263,8 +265,13 @@ class UserRepository extends ChangeNotifier {
           _authCredential = FacebookAuthProvider.getCredential(
               accessToken: _fBookAccessToken.token);
           _user = await _auth.signInWithCredential(_authCredential);
-          _status = Status.authenticated;
-          notifyListeners();
+
+          if (_user != null) {
+            await createFavorites();
+            _status = Status.authenticated;
+            notifyListeners();
+          }
+
           break;
         case FacebookLoginStatus.cancelledByUser:
           _status = Status.unauthenticated;
@@ -307,7 +314,9 @@ class UserRepository extends ChangeNotifier {
       _user = await _auth.currentUser();
 
       if (_user != null) {
+        await createFavorites();
         _status = Status.authenticated;
+        print('this is the users email on sign up: ${_user.email}');
         notifyListeners();
       }
       return true;
@@ -328,6 +337,7 @@ class UserRepository extends ChangeNotifier {
     _user =
         await _auth.currentUser().catchError((onError) => print(onError.code));
     if (_user.isEmailVerified) {
+      await createFavorites();
       _status = Status.authenticated;
       notifyListeners();
     } else {
@@ -342,10 +352,12 @@ class UserRepository extends ChangeNotifier {
   }
 
   Future<void> signOut() async {
+    print(_user.email);
     await _auth.signOut();
     await _googleSignIn.signOut();
-    await _login.logOut();
+    // await _login.logOut();
     if (_user == null) {
+      print('no user on sign out');
       _status = Status.unauthenticated;
       notifyListeners();
     }
@@ -361,22 +373,23 @@ class UserRepository extends ChangeNotifier {
   }
 
   Future<void> createFavorites() async {
-    final user = await _auth.currentUser();
+    if (_user != null) {
+      final DocumentSnapshot querySnapshot = await Firestore.instance
+          .collection('users')
+          .document(_user.uid)
+          .get();
 
-    await Firestore.instance.runTransaction((Transaction tx) async {
-      final DocumentReference favoritesReference =
-          Firestore.instance.collection('users').document(user.uid);
-
-      await tx.get(favoritesReference).then((postSnapshot) {
-        if (!postSnapshot.exists) {
-          tx.set(favoritesReference, {'favorites': []});
-        } else {
-          return null;
-        }
-      });
-    }).catchError((error) {
-      print('Error: $error');
-      return false;
-    });
+      if (!querySnapshot.exists) {
+        print('hmmmmmm');
+        await Firestore.instance
+            .collection('users')
+            .document(_user.uid)
+            .setData({'favorites': []});
+      }
+    } else {
+      return print(
+          'Something is wrong with accessing the user from '
+              'the create favorites method in the user repository');
+    }
   }
 }

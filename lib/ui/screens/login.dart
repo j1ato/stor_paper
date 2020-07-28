@@ -146,7 +146,7 @@ class _LoginPageState extends State<LoginScreen> {
                                   content: Container(
                                     child: Text(
                                       'Reset Password?',
-                                      style: buildTheme().textTheme.body2,
+                                      style: buildTheme().textTheme.bodyText2,
                                     ),
                                   ),
                                   actions: <Widget>[

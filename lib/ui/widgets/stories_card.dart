@@ -63,6 +63,7 @@ class _StoriesCardState extends State<StoriesCard> {
       },
       imageUrl: widget.stories['image'],
       imageBuilder: (context, imageProvider) {
+        print(widget.stories['id']);
         return Container(
           child: Center(
             child: Stack(

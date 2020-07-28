@@ -84,7 +84,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
                                 content: Container(
                                   child: Text(
                                     'Verification email has been resent!',
-                                    style: buildTheme().textTheme.body2,
+                                    style: buildTheme().textTheme.bodyText2,
                                   ),
                                 ),
                                 actions: <Widget>[

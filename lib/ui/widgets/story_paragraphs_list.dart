@@ -76,6 +76,7 @@ class _StoryParagraphsState extends State<StoryParagraphs> {
 
   @override
   Widget build(BuildContext context) {
+
     if (_storyController != null) {
       _storyController.addListener(() {
         if (_storyController.position.userScrollDirection ==
@@ -137,7 +138,7 @@ class _StoryParagraphsState extends State<StoryParagraphs> {
           child: AppBar(
             title: Text(
               widget.stories['storyTitle'],
-              style: buildTheme().textTheme.display2,
+              style: buildTheme().textTheme.headline2,
             ),
             centerTitle: true,
             leading: IconButton(
@@ -147,7 +148,6 @@ class _StoryParagraphsState extends State<StoryParagraphs> {
               ),
               onPressed: () {
                 Navigator.pop(context);
-                // user.getFavorites();
               },
             ),
             actions: <Widget>[
@@ -166,14 +166,14 @@ class _StoryParagraphsState extends State<StoryParagraphs> {
                     value: 1,
                     child: Text(
                       'Text Size',
-                      style: buildTheme().textTheme.body2,
+                      style: buildTheme().textTheme.bodyText2,
                     ),
                   ),
                   PopupMenuItem<dynamic>(
                     value: 2,
                     child: Text(
                       'Glossary',
-                      style: buildTheme().textTheme.body2,
+                      style: buildTheme().textTheme.bodyText2,
                     ),
                   ),
                 ],

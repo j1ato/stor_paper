@@ -11,8 +11,8 @@ import 'package:in_app_purchase/in_app_purchase.dart';
 // widget that checks if user has purchased a volume via in app purchase
 // and updates the ui accordingly, also allows new purchases
 
-class VolumesCard extends StatefulWidget {
-  const VolumesCard({
+class VolumeCards extends StatefulWidget {
+  const VolumeCards({
     this.volumeTitle,
     this.image,
     this.numberOfStories,
@@ -20,6 +20,7 @@ class VolumesCard extends StatefulWidget {
     this.artworks,
     this.productID,
     this.controller,
+    this.state,
   });
 
   final String volumeTitle;
@@ -29,12 +30,13 @@ class VolumesCard extends StatefulWidget {
   final Map artworks;
   final String productID;
   final PageController controller;
+  final bool state;
 
   @override
-  _VolumesCardState createState() => _VolumesCardState();
+  _VolumeCardsState createState() => _VolumeCardsState();
 }
 
-class _VolumesCardState extends State<VolumesCard> {
+class _VolumeCardsState extends State<VolumeCards> {
   String productID;
   InAppPurchaseConnection _iap;
   bool _available = true;
@@ -118,7 +120,7 @@ class _VolumesCardState extends State<VolumesCard> {
             content: Container(
               child: Text(
                 'Thank you, your purchase was successful.',
-                style: buildTheme().textTheme.body2,
+                style: buildTheme().textTheme.bodyText2,
               ),
             ),
             actions: <Widget>[
@@ -150,7 +152,7 @@ class _VolumesCardState extends State<VolumesCard> {
             content: Container(
               child: Text(
                 'Purchase unsuccsessful',
-                style: buildTheme().textTheme.body2,
+                style: buildTheme().textTheme.bodyText2,
               ),
             ),
             actions: <Widget>[
@@ -195,6 +197,7 @@ class _VolumesCardState extends State<VolumesCard> {
             volumeTitle: widget.volumeTitle,
             numberOfStories: widget.numberOfStories,
             stories: widget.stories,
+            state: widget.state,
           );
           
         } else {
@@ -204,6 +207,7 @@ class _VolumesCardState extends State<VolumesCard> {
             numberOfStories: widget.numberOfStories,
             stories: widget.stories,
             prodDetails: prodDetails,
+            state: widget.state,
           );
         }
       }

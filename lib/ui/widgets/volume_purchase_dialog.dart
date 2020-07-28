@@ -31,7 +31,7 @@ class VolumePurchaseDialog extends StatelessWidget {
         child: Center(
           child: Text(
             'Would you like to purchase this collection?',
-            style: buildTheme().textTheme.body2,
+            style: buildTheme().textTheme.bodyText2,
           ),
         ),
       ),
