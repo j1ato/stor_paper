@@ -23,6 +23,4 @@ class DatabaseServices extends ChangeNotifier {
         .snapshots()
         .map((singleUser) => UserFavorites.fromFirestore(singleUser.data));
   }
-
-
 }
