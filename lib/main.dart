@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stor_paper/model/database_services.dart';
-import 'package:stor_paper/ui/screens/favorite_stories.dart';
+import 'package:stor_paper/providers/database_services.dart';
+import 'package:stor_paper/ui/screens/volume_screens/favorite_stories.dart';
 import 'package:stor_paper/ui/screens/home.dart';
-import 'package:stor_paper/ui/screens/login.dart';
+import 'package:stor_paper/ui/screens/signup_login/login.dart';
 import 'package:stor_paper/ui/screens/settings.dart';
-import 'package:stor_paper/ui/screens/register_screen.dart';
-import 'package:stor_paper/ui/screens/volume_wallpaper_download.dart';
-import 'package:stor_paper/ui/screens/stories.dart';
-import 'package:stor_paper/ui/screens/verify_email_screen.dart';
+import 'package:stor_paper/ui/screens/signup_login/register_screen.dart';
+import 'package:stor_paper/ui/screens/volume_screens/volume_wallpaper_download.dart';
+import 'package:stor_paper/ui/screens/volume_screens/stories.dart';
+import 'package:stor_paper/ui/screens/signup_login/verify_email_screen.dart';
 import 'package:stor_paper/ui/theme.dart';
-import 'package:stor_paper/ui/screens/read_screen.dart';
-import 'package:stor_paper/ui/screens/volumes.dart';
-import 'package:stor_paper/utils/user_repository.dart';
-import 'package:stor_paper/ui/screens/sign_up_options.dart';
+import 'package:stor_paper/ui/screens/volume_screens/read_screen.dart';
+import 'package:stor_paper/ui/screens/volume_screens/volumes.dart';
+import 'package:stor_paper/providers/user_repository.dart';
+import 'package:stor_paper/ui/screens/signup_login/sign_up_options.dart';
 import 'package:flutter/services.dart';
 
 // main screen that contains changeNotifierProvider
@@ -43,6 +43,7 @@ class _StorPaperAppState extends State<StorPaperApp> {
         create: (context) => UserRepository.instance()),
         ChangeNotifierProvider<DatabaseServices>(
         create: (context) => DatabaseServices()),
+        
       ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,

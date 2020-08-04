@@ -2,13 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stor_paper/model/database_services.dart';
-import 'package:stor_paper/model/volume_class.dart';
-import 'package:stor_paper/ui/screens/volumes.dart';
-import 'package:stor_paper/ui/screens/favorite_stories.dart';
+import 'package:stor_paper/providers/database_services.dart';
+import 'package:stor_paper/model/database_models.dart';
+import 'package:stor_paper/providers/volume_screen_state.dart';
+import 'package:stor_paper/ui/screens/volume_screens/volumes.dart';
+import 'package:stor_paper/ui/screens/volume_screens/favorite_stories.dart';
 import 'package:stor_paper/ui/screens/settings.dart';
 import 'package:stor_paper/ui/theme.dart';
-import 'package:stor_paper/utils/user_repository.dart';
+import 'package:stor_paper/providers/user_repository.dart';
 
 // Bottom navigation bar with corresponding screens and
 // page storage keys to keep scroll location of each page
@@ -60,18 +61,20 @@ class _HomeScreenState extends State<HomeScreen> {
       providers: [
         StreamProvider<List<Volume>>.value(
           value: db.streamVolumes(),
-          catchError: (context, error) => null,
+          catchError: (context, error) => [],
         ),
         StreamProvider<UserFavorites>.value(
-            value: db.streamFavorites(currentUser),
-            catchError: (context, error) {
-              print(
-                  'this is the user favorites' 
-                  ' stream error ${error.toString()}');
-              return UserFavorites.fromFirestore({
+          value: db.streamFavorites(currentUser),
+          catchError: (context, error) {
+            print('this is the user favorites'
+                ' stream error ${error.toString()}');
+            return UserFavorites.fromFirestore(
+              {
                 'favorites': ['']
-              });
-            }),
+              },
+            );
+          },
+        ),
       ],
       child: Scaffold(
           body: currentpage,

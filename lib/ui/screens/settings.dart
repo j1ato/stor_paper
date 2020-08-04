@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:stor_paper/ui/widgets/flushbars.dart';
-import 'package:stor_paper/ui/widgets/settings_card.dart';
+import 'package:stor_paper/ui/widgets/popup_dialogs/flushbars.dart';
+import 'package:stor_paper/ui/widgets/shared_widgets/settings_card.dart';
 import 'package:stor_paper/ui/theme.dart';
-import 'package:stor_paper/utils/user_repository.dart';
+import 'package:stor_paper/providers/user_repository.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 

@@ -10,12 +10,12 @@ ThemeData buildTheme() {
       headline1: base.headline1.copyWith(
           fontFamily: 'Cinzel',
           fontSize: 52,
-          color: Colors.white.withOpacity(0.8),
+          color: Colors.black.withOpacity(0.8),
           fontWeight: FontWeight.bold),
       headline2: base.headline2.copyWith(
           fontFamily: 'Cinzel',
           fontSize: 22,
-          color: Colors.white.withOpacity(0.8),
+          color: Colors.black.withOpacity(0.8),
           fontWeight: FontWeight.bold),
       subtitle1: base.subtitle1.copyWith(
           fontFamily: 'Cinzel',
@@ -25,22 +25,22 @@ ThemeData buildTheme() {
       bodyText1: base.bodyText1.copyWith(
         fontFamily: 'Lato',
         fontSize: 16,
-        color: Colors.white.withOpacity(0.8),
+          color: Colors.white.withOpacity(0.8),
       ),
       bodyText2: base.bodyText2.copyWith(
           fontFamily: 'Lato',
           fontSize: 14,
-          color: Colors.white.withOpacity(0.5),
+          color: Colors.white.withOpacity(0.8),
           textBaseline: TextBaseline.ideographic),
       caption: base.caption.copyWith(
         fontFamily: 'Lato',
         fontSize: 12,
-        color: Colors.white.withOpacity(0.5),
+          color: Colors.white.withOpacity(0.8),
       ),
       button: base.button.copyWith(
         fontFamily: 'Lato',
         fontSize: 15,
-        color: Colors.white.withOpacity(0.8),
+          color: Colors.white.withOpacity(0.8),
         fontWeight: FontWeight.w800,
       ),
     );
