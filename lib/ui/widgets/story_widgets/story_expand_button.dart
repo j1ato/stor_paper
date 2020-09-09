@@ -12,27 +12,31 @@ class StoryExpandButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RawMaterialButton(
-      constraints: BoxConstraints.tight(const Size(25, 25)),
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => DownloadStoryWallpaper(
-              storyID: storyID,
-              imageString: imageURL,
+    return Positioned(
+      left: 30,
+      bottom: 0,
+          child: RawMaterialButton(
+        constraints: BoxConstraints.tight(const Size(25, 25)),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => DownloadStoryWallpaper(
+                storyID: storyID,
+                imageString: imageURL,
+              ),
             ),
-          ),
-        );
-      },
-      child: Icon(
-        Icons.fullscreen,
-        size: 20,
-        color: Colors.white.withOpacity(0.6),
+          );
+        },
+        child: Icon(
+          Icons.fullscreen,
+          size: 12,
+          color: Colors.white.withOpacity(0.6),
+        ),
+        elevation: 0,
+        fillColor: Color(0xF042444F),
+        shape: const CircleBorder(),
       ),
-      elevation: 0,
-      fillColor: Colors.black.withOpacity(0.03),
-      shape: const CircleBorder(),
     );
   }
 }

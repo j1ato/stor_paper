@@ -1,10 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // methods used to save and retrieve scroll offset and 
 // textsize between app restarts
 // convert to change notifier
 
-class AllSharedPrefs {
+class AllSharedPrefs extends ChangeNotifier {
   static double value;
 
   Future<void> saveOffset(String storyKey, double scrollPosition) async {

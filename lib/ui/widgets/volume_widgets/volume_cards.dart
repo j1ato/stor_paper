@@ -20,6 +20,7 @@ class VolumeCards extends StatefulWidget {
     this.artworks,
     this.productID,
     this.controller,
+    this.index,
     this.state,
   });
 
@@ -30,6 +31,7 @@ class VolumeCards extends StatefulWidget {
   final Map artworks;
   final String productID;
   final PageController controller;
+  final int index;
   final bool state;
 
   @override
@@ -48,7 +50,6 @@ class _VolumeCardsState extends State<VolumeCards> {
   void initState() {
     _iap = InAppPurchaseConnection.instance;
     productID = widget.productID;
-    print('Product id: ${widget.productID}');
     _initialize();
     super.initState();
   }
@@ -82,7 +83,6 @@ class _VolumeCardsState extends State<VolumeCards> {
 
     await _iap.queryProductDetails(ids).then((responseResult) {
       if (responseResult.notFoundIDs.isNotEmpty) {
-        print(responseResult.notFoundIDs);
       } else {
         response = responseResult;
       }
@@ -197,6 +197,7 @@ class _VolumeCardsState extends State<VolumeCards> {
             volumeTitle: widget.volumeTitle,
             numberOfStories: widget.numberOfStories,
             stories: widget.stories,
+            index: widget.index,
             state: widget.state,
           );
           

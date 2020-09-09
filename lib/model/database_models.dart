@@ -49,3 +49,36 @@ class UserFavorites {
 
   final List favorites;
 }
+
+class Story {
+
+  const Story({
+    this.id,
+    this.blurb,
+    this.glossary,
+    this.image,
+    this.paragraphs,
+    this.readTime,
+    this.storyTitle,
+  });
+
+  factory Story.fromFirestore(Map storyData) {
+    return Story (
+      id: storyData['id'],
+      blurb: storyData['blurb'],
+      glossary: storyData['glossary'],
+      image: storyData['image'],
+      paragraphs: storyData['paragraphs'],
+      readTime: storyData['readTime'],
+      storyTitle: storyData['storyTitle'],
+    );
+  }
+
+  final String id;
+  final String blurb;
+  final List glossary;
+  final String image;
+  final List paragraphs;
+  final String readTime;
+  final String storyTitle;
+}

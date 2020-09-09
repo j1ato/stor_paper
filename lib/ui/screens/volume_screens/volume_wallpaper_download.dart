@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:image_downloader/image_downloader.dart';
 import 'package:stor_paper/ui/widgets/popup_dialogs/flushbars.dart';
-import 'package:stor_paper/ui/widgets/popup_dialogs/shared_widgets/wallpaper_download_button.dart';
+import 'package:stor_paper/ui/widgets/shared_widgets/wallpaper_download_button.dart';
 
 // fullscreen view of volume artwork where you can download the images
 // flushbar indicates download has begun and ended and code also 

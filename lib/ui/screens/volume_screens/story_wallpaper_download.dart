@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:image_downloader/image_downloader.dart';
 import 'package:stor_paper/ui/widgets/popup_dialogs/flushbars.dart';
-import 'package:stor_paper/ui/widgets/popup_dialogs/shared_widgets/wallpaper_download_button.dart';
+import 'package:stor_paper/ui/widgets/shared_widgets/wallpaper_download_button.dart';
 
 // fullscreen view of story artwork where you can download the images
 // flushbar indicates download has begun and ended and code also 
@@ -39,47 +39,44 @@ class _DownloadStoryWallpaperState extends State<DownloadStoryWallpaper> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      bottom: false,
-      child: Scaffold(
-        body: Stack(
-          children: <Widget>[
-            CachedNetworkImage(
-              imageUrl: widget.imageString,
-              imageBuilder: (context, imageProvider) {
-                return Hero(
-                  tag: widget.storyID,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: imageProvider, fit: BoxFit.cover),
-                    ),
+    return Scaffold(
+      body: Stack(
+        children: <Widget>[
+          CachedNetworkImage(
+            imageUrl: widget.imageString,
+            imageBuilder: (context, imageProvider) {
+              return Hero(
+                tag: widget.storyID,
+                child: Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: imageProvider, fit: BoxFit.cover),
                   ),
-                );
-              },
-            ),
-            Positioned(
-              child: RawMaterialButton(
-                constraints: const BoxConstraints(minWidth: 35, minHeight: 35),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Icon(
-                  Icons.arrow_back,
-                  size: 25,
-                  color: Colors.white.withOpacity(0.9),
                 ),
-                fillColor: Colors.black.withOpacity(0.001),
-                shape: const CircleBorder(),
+              );
+            },
+          ),
+          Positioned(
+            child: RawMaterialButton(
+              constraints: const BoxConstraints(minWidth: 35, minHeight: 35),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Icon(
+                Icons.arrow_back,
+                size: 25,
+                color: Colors.white.withOpacity(0.9),
               ),
-              top: 5,
-              left: 5,
+              fillColor: Colors.black.withOpacity(0.001),
+              shape: const CircleBorder(),
             ),
-            DownloadButton(
-              imageString: widget.imageString,
-            ),
-          ],
-        ),
+            top: 5,
+            left: 5,
+          ),
+          DownloadButton(
+            imageString: widget.imageString,
+          ),
+        ],
       ),
     );
   }

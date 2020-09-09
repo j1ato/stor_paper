@@ -8,17 +8,21 @@ ThemeData buildTheme() {
   TextTheme _buildTextTheme(TextTheme base) {
     return base.copyWith(
       headline1: base.headline1.copyWith(
-          fontFamily: 'Cinzel',
-          fontSize: 52,
-          color: Colors.black.withOpacity(0.8),
+          fontFamily: 'Notable',
+          fontSize: 55,
+          color: 
+    const 
+    // Color(0xF0DADBDF)
+          Color(0xF042444F)
+          ,
           fontWeight: FontWeight.bold),
       headline2: base.headline2.copyWith(
-          fontFamily: 'Cinzel',
+          fontFamily: 'Baloo',
           fontSize: 22,
-          color: Colors.black.withOpacity(0.8),
+          color: Color(0xF042444F),
           fontWeight: FontWeight.bold),
       subtitle1: base.subtitle1.copyWith(
-          fontFamily: 'Cinzel',
+          fontFamily: 'Baloo',
           fontSize: 18,
           color: Colors.white.withOpacity(0.8),
           fontWeight: FontWeight.bold),
@@ -54,7 +58,10 @@ ThemeData buildTheme() {
     ),
     dialogBackgroundColor: const Color(0xF0111114).withOpacity(0.8),
     bottomAppBarColor: const Color(0xF0D7D9E1),
-    scaffoldBackgroundColor: const Color(0xF0D7D9E1),
+    scaffoldBackgroundColor: 
+    // Color(0xF042444F)
+    const Color(0xF0DADBDF)
+    ,
     buttonColor: const Color(0xF0111114).withOpacity(0.03),
     popupMenuTheme: PopupMenuThemeData(
       color: const Color(0xF0111114),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:stor_paper/ui/widgets/volume_widgets/volume_purchase_dialog.dart';
-import '../popup_dialogs/shared_widgets/info_button.dart';
+import '../shared_widgets/info_button.dart';
 
 // variation of volume container if the user hasn't purchased it
 

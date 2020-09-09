@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stor_paper/model/database_models.dart';
-import 'package:stor_paper/providers/volume_screen_state.dart';
+import 'package:stor_paper/providers/controller_states.dart';
+import 'package:stor_paper/ui/widgets/shared_widgets/responsive_screen_title.dart';
 import 'package:stor_paper/ui/widgets/volume_widgets/volume_cards.dart';
 
 // pageview that scrolls horizontally that displays cover art for
@@ -39,43 +40,53 @@ class _VolumesCardListState extends State<VolumesCardList> {
   @override
   Widget build(BuildContext context) {
     final volumesList = Provider.of<List<Volume>>(context);
+    final volumeState = Provider.of<VolumeScreenState>(context,listen: false);
+    // Provider.of<VolumeScreenState>(context,listen: false).updateVolumeScreenState(_controller);
+    // Volume currentVolume;
 
-    return ChangeNotifierProvider<VolumeScreenState>(
-      create: (context) => VolumeScreenState(_controller),
-      child: SafeArea(
-        child: Scaffold(
-            body: Column(
-          children: <Widget>[
-            if (volumesList != null) ...[
-              Expanded(
-                child: PageView.builder(
-                  controller: _controller,
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
-                  itemCount: volumesList.length,
-                  itemBuilder: (context, index) {
-                    double pageOffset = Provider.of<VolumeScreenState>(context).offset;
-                    print(pageOffset);
-                    final volume = volumesList[index];
-                    final bool active = index == currentPage;
-                    print(active);
-                    return VolumeCards(
+    return Scaffold(
+        body: Stack(
+      children: [
+                  ResponsiveScreenTitle(
+          title: volumeState.volumeTitle,
+        ),
+
+        if (volumesList != null) ...[
+          Positioned.fill(
+            bottom: 20,
+            child: PageView.builder(
+              controller: _controller,
+              physics: const AlwaysScrollableScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+              itemCount: volumesList.length,
+              itemBuilder: (context, index) {
+                currentPage = _controller.page.round();
+                final volume = volumesList[index];
+                // currentVolume = volume;
+                // volumeState.updateVolumeTitle(volume);
+                final bool active = index == currentPage;
+                return Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 30),
+                    child: VolumeCards(
                       controller: _controller,
                       volumeTitle: volume.volumeTitle,
                       image: volume.image,
                       numberOfStories: volume.numberOfStories,
                       stories: volume.stories,
                       productID: volume.productID,
+                      index: index,
                       state: active,
-                    );
-                  },
-                ),
-              )
-            ],
-            if (volumesList == null) ...[Container()]
-          ],
-        )),
-      ),
-    );
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+        if (volumesList == null) ...[],
+      ],
+    ));
   }
 }

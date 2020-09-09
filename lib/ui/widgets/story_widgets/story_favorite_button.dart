@@ -32,46 +32,52 @@ class FavoriteButton extends StatelessWidget {
       updateFavorites(userRepository.user.uid, storyID);
     }
 
-    return StreamBuilder(
-      stream: _userDocument,
-      builder: (context, userDocument) {
-        if (userDocument.data != null) {
-          return RawMaterialButton(
-            constraints: BoxConstraints.tight(const Size(25, 25)),
-            onPressed: () async {
-              await userRepository.checkConnectivity();
-              if (userRepository.isConnected == true) {
-                _handleFavoriteStoriesChanged(storyID);
-              } else {
-                Flushbars().connetivityFlushbar(context);
-              }
-            },
-            child: Icon(
-              userFavorites.favorites.contains(storyID) == true
-                  ? Icons.favorite
-                  : Icons.favorite_border,
-              size: 18,
-              color: Colors.white.withOpacity(0.6),
-            ),
-            elevation: 0,
-            fillColor: Colors.black.withOpacity(0.03),
-            shape: const CircleBorder(),
-          );
-        } else {
-          return RawMaterialButton(
-            constraints: BoxConstraints.tight(const Size(25, 25)),
-            onPressed: () => null,
-            child: Icon(
-              Icons.favorite_border,
-              size: 18,
-              color: Colors.white.withOpacity(0.6),
-            ),
-            elevation: 0,
-            fillColor: Colors.black.withOpacity(0.03),
-            shape: const CircleBorder(),
-          );
-        }
-      },
+    return Positioned.fill(
+      bottom: 0,
+          child: Align(
+        alignment: AlignmentDirectional.bottomCenter,
+            child: StreamBuilder(
+          stream: _userDocument,
+          builder: (context, userDocument) {
+            if (userDocument.data != null) {
+              return RawMaterialButton(
+                constraints: BoxConstraints.tight(const Size(25, 25)),
+                onPressed: () async {
+                  await userRepository.checkConnectivity();
+                  if (userRepository.isConnected == true) {
+                    _handleFavoriteStoriesChanged(storyID);
+                  } else {
+                    Flushbars().connetivityFlushbar(context);
+                  }
+                },
+                child: Icon(
+                  userFavorites.favorites.contains(storyID) == true
+                      ? Icons.favorite
+                      : Icons.favorite_border,
+                  size: 12,
+                  color: Colors.white.withOpacity(0.6),
+                ),
+                elevation: 0,
+                fillColor: Color(0xF042444F),
+                shape: const CircleBorder(),
+              );
+            } else {
+              return RawMaterialButton(
+                constraints: BoxConstraints.tight(const Size(25, 25)),
+                onPressed: () => null,
+                // child: Icon(
+                //   Icons.favorite_border,
+                //   size: 12,
+                //   color: Colors.white.withOpacity(0.6),
+                // ),
+                elevation: 0,
+                fillColor: Color(0xF042444F),
+                shape: const CircleBorder(),
+              );
+            }
+          },
+        ),
+      ),
     );
   }
 }

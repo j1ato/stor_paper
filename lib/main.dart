@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stor_paper/providers/controller_states.dart';
 import 'package:stor_paper/providers/database_services.dart';
 import 'package:stor_paper/ui/screens/volume_screens/favorite_stories.dart';
 import 'package:stor_paper/ui/screens/home.dart';
@@ -37,12 +38,15 @@ class _StorPaperAppState extends State<StorPaperApp> {
 
   @override
   Widget build(BuildContext context) {
+    
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<UserRepository>(
         create: (context) => UserRepository.instance()),
         ChangeNotifierProvider<DatabaseServices>(
         create: (context) => DatabaseServices()),
+                ChangeNotifierProvider<StoriesScreenState>(
+        create: (context) => StoriesScreenState()),
         
       ],
           child: MaterialApp(

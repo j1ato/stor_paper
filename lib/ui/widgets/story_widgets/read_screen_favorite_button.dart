@@ -63,15 +63,3 @@ class ReadScreenFavoriteButton extends StatelessWidget {
   }
 }
 
-class Paragraphs {
-  Padding buildParagraph(String paragraph) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-      child: Text(
-        paragraph,
-        style:
-            TextStyle(fontFamily: 'Roboto', fontSize: 17, color: Colors.white),
-      ),
-    );
-  }
-}

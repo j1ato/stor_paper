@@ -2,9 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stor_paper/providers/controller_states.dart';
 import 'package:stor_paper/providers/database_services.dart';
 import 'package:stor_paper/model/database_models.dart';
-import 'package:stor_paper/providers/volume_screen_state.dart';
 import 'package:stor_paper/ui/screens/volume_screens/volumes.dart';
 import 'package:stor_paper/ui/screens/volume_screens/favorite_stories.dart';
 import 'package:stor_paper/ui/screens/settings.dart';
@@ -59,6 +59,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider<VolumeScreenState>(
+            create: (context) => VolumeScreenState()),
         StreamProvider<List<Volume>>.value(
           value: db.streamVolumes(),
           catchError: (context, error) => [],
@@ -77,54 +79,55 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ],
       child: Scaffold(
-          body: currentpage,
-          bottomNavigationBar: Theme(
-            data: Theme.of(context).copyWith(
-              canvasColor: buildTheme().bottomAppBarColor,
-            ),
-            child: BottomNavigationBar(
-                selectedItemColor: Colors.white.withOpacity(0.8),
-                unselectedItemColor: Colors.grey.shade700.withOpacity(0.5),
-                elevation: 0,
-                type: BottomNavigationBarType.shifting,
-                currentIndex: currentTabIndex,
-                onTap: (int index) {
-                  setState(() {
-                    currentTabIndex = index;
-                    currentpage = pages[index];
-                  });
-                },
-                items: [
-                  BottomNavigationBarItem(
-                      icon: Icon(
-                        Icons.book,
-                        size: 25,
-                      ),
-                      title: const Text(
-                        '',
-                        style: TextStyle(fontSize: 0),
-                      )),
-                  BottomNavigationBarItem(
-                      icon: Icon(
-                        Icons.favorite,
-                        size: 25,
-                      ),
-                      title: const Text(
-                        '',
-                        style: TextStyle(fontSize: 0),
-                      )),
-                  BottomNavigationBarItem(
+        body: currentpage,
+        bottomNavigationBar: Theme(
+          data: Theme.of(context).copyWith(
+            canvasColor: buildTheme().bottomAppBarColor,
+          ),
+          child: BottomNavigationBar(
+              selectedItemColor: Colors.white.withOpacity(0.8),
+              unselectedItemColor: Colors.grey.shade700.withOpacity(0.5),
+              elevation: 0,
+              type: BottomNavigationBarType.shifting,
+              currentIndex: currentTabIndex,
+              onTap: (int index) {
+                setState(() {
+                  currentTabIndex = index;
+                  currentpage = pages[index];
+                });
+              },
+              items: [
+                BottomNavigationBarItem(
                     icon: Icon(
-                      Icons.settings,
+                      Icons.book,
                       size: 25,
                     ),
                     title: const Text(
-                      ' ',
+                      '',
                       style: TextStyle(fontSize: 0),
+                    )),
+                BottomNavigationBarItem(
+                    icon: Icon(
+                      Icons.favorite,
+                      size: 25,
                     ),
-                  )
-                ]),
-          )),
+                    title: const Text(
+                      '',
+                      style: TextStyle(fontSize: 0),
+                    )),
+                BottomNavigationBarItem(
+                  icon: Icon(
+                    Icons.settings,
+                    size: 25,
+                  ),
+                  title: const Text(
+                    ' ',
+                    style: TextStyle(fontSize: 0),
+                  ),
+                )
+              ]),
+        ),
+      ),
     );
   }
 }

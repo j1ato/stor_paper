@@ -38,7 +38,7 @@ class ExpandButton extends StatelessWidget {
           color: Colors.white.withOpacity(0.6),
         ),
         elevation: 0,
-        fillColor: Colors.black.withOpacity(0.03),
+        fillColor: Color(0xF017171B),
         shape: const CircleBorder(),
       ),
     );

@@ -20,8 +20,8 @@ class InfoButton extends StatelessWidget {
     final pageWidth = MediaQuery.of(context).size.width;
 
     return Positioned(
-      bottom: type == 'story card' ? 1 : pageHeight * 0.01,
-      right: type == 'story card' ? 1 : pageWidth * 0.02,
+      bottom: type == 'story card' ? 0 : pageHeight * 0.01,
+      right: type == 'story card' ? 30 : pageWidth * 0.05,
 
       child: RawMaterialButton(
         constraints: const BoxConstraints(minWidth: 25, minHeight: 25),
@@ -73,11 +73,11 @@ class InfoButton extends StatelessWidget {
         ),
         child: Icon(
           Icons.more_vert,
-          size: 20,
+          size: 12,
           color: Colors.white.withOpacity(0.7),
         ),
         elevation: 0,
-        fillColor: Colors.black.withOpacity(0.06),
+        fillColor: Color(0xF042444F),
         shape: const CircleBorder(),
       ),
     );

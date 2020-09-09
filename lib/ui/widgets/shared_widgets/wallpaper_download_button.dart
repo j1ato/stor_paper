@@ -43,14 +43,12 @@ class _DownloadButtonState extends State<DownloadButton> {
   void _updateStatus(PermissionStatus status) {
     if (status != _status) {
       setState(() {
-        print(status);
         _status = status;
       });
     }
   }
 
   void _requestPermission() {
-    print('Permission requested');
     PermissionHandler().requestPermissions([PermissionGroup.storage]).then(
         _onPermissionRequested);
   }
@@ -58,7 +56,6 @@ class _DownloadButtonState extends State<DownloadButton> {
   void _onPermissionRequested(Map<PermissionGroup, PermissionStatus> statuses) {
     final status = statuses[PermissionGroup.storage];
     _updateStatus(status);
-    print(status);
   }
 
   @override

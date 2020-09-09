@@ -46,10 +46,10 @@ class _StoryParagraphsState extends State<StoryParagraphs> {
 
   Future<double> _showGlossaryDialog() async {
     final glossary = await showDialog<double>(
-      context: context,
-      builder: (context) =>
-      GlossaryAlertDialog(glossaryItems: widget.stories['glossary'],)
-    );
+        context: context,
+        builder: (context) => GlossaryAlertDialog(
+              glossaryItems: widget.stories['glossary'],
+            ));
     return glossary;
   }
 
@@ -76,35 +76,36 @@ class _StoryParagraphsState extends State<StoryParagraphs> {
 
   @override
   Widget build(BuildContext context) {
-
     if (_storyController != null) {
-      _storyController.addListener(() {
-        if (_storyController.position.userScrollDirection ==
-            ScrollDirection.reverse) {
-          final double position = _storyController.position.pixels;
-
-          AllSharedPrefs().saveOffset(widget.stories['id'], position);
-          print(position);
-          if (_isVisible == true) {
-            setState(() {
-              _isVisible = false;
-            });
-          }
-        } else {
+      _storyController.addListener(
+        () {
           if (_storyController.position.userScrollDirection ==
-              ScrollDirection.forward) {
+              ScrollDirection.reverse) {
             final double position = _storyController.position.pixels;
+
             AllSharedPrefs().saveOffset(widget.stories['id'], position);
             print(position);
-
-            if (_isVisible == false) {
+            if (_isVisible == true) {
               setState(() {
-                _isVisible = true;
+                _isVisible = false;
               });
             }
+          } else {
+            if (_storyController.position.userScrollDirection ==
+                ScrollDirection.forward) {
+              final double position = _storyController.position.pixels;
+              AllSharedPrefs().saveOffset(widget.stories['id'], position);
+              print(position);
+
+              if (_isVisible == false) {
+                setState(() {
+                  _isVisible = true;
+                });
+              }
+            }
           }
-        }
-      });
+        },
+      );
     }
 
     final List<Widget> textElements = [];
@@ -121,10 +122,11 @@ class _StoryParagraphsState extends State<StoryParagraphs> {
       );
       textElements.add(
         const SizedBox(
-          height: 10,
+          height: 20,
         ),
       );
     }
+
     return Scaffold(
       floatingActionButton: Visibility(
           visible: _isVisible,
@@ -185,9 +187,9 @@ class _StoryParagraphsState extends State<StoryParagraphs> {
       ),
       body: ListView(
         physics: const BouncingScrollPhysics(
-        parent: AlwaysScrollableScrollPhysics()),
+            parent: AlwaysScrollableScrollPhysics()),
         controller: _storyController,
-        padding: const EdgeInsets.fromLTRB(20, 0, 10, 0),
+        padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
         children: textElements,
       ),
     );
