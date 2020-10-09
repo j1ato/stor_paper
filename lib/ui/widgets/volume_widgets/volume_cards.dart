@@ -201,7 +201,9 @@ class _VolumeCardsState extends State<VolumeCards> {
             state: widget.state,
           );
           
-        } else {
+        } 
+        
+        else {
           volumeContainer =  LockedVolumeContainer(
             imageUrl: widget.image,
             volumeTitle: widget.volumeTitle,

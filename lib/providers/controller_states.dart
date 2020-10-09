@@ -16,8 +16,9 @@ class VolumeScreenState extends ChangeNotifier {
     );
   }
 
-  void updateVolumeTitle(Volume currentVolume) {
-    _volumeTitle = currentVolume.volumeTitle;
+  void updateVolumeTitle(String volumeTitle) {
+    _volumeTitle = volumeTitle;
+    print("current volume title $volumeTitle");
     // notifyListeners();
   }
 

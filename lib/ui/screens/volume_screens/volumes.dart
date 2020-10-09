@@ -22,13 +22,14 @@ class VolumesCardList extends StatefulWidget {
 class _VolumesCardListState extends State<VolumesCardList> {
   int currentPage = 0;
 
-  final PageController _controller = PageController(viewportFraction: 0.93);
+  final PageController _controller = PageController(viewportFraction: 1);
 
   @override
   void initState() {
     super.initState();
     _controller.addListener(() {
       final int nextPage = _controller.page.round();
+      print("This is the next page: $nextPage");
       if (currentPage != nextPage) {
         setState(() {
           currentPage = nextPage;
@@ -40,17 +41,23 @@ class _VolumesCardListState extends State<VolumesCardList> {
   @override
   Widget build(BuildContext context) {
     final volumesList = Provider.of<List<Volume>>(context);
-    final volumeState = Provider.of<VolumeScreenState>(context,listen: false);
+    final volumeState = Provider.of<VolumeScreenState>(context, listen: false);
     // Provider.of<VolumeScreenState>(context,listen: false).updateVolumeScreenState(_controller);
-    // Volume currentVolume;
+    Volume currentVolume;
 
     return Scaffold(
         body: Stack(
       children: [
-                  ResponsiveScreenTitle(
-          title: volumeState.volumeTitle,
-        ),
-
+        if (volumeState.volumeTitle != null) ...[
+          ResponsiveScreenTitle(
+            title: volumeState.volumeTitle,
+          ),
+        ],
+        if (volumeState.volumeTitle == null) ...[
+          ResponsiveScreenTitle(
+            title: "I",
+          ),
+        ],
         if (volumesList != null) ...[
           Positioned.fill(
             bottom: 20,
@@ -60,10 +67,11 @@ class _VolumesCardListState extends State<VolumesCardList> {
               scrollDirection: Axis.horizontal,
               itemCount: volumesList.length,
               itemBuilder: (context, index) {
-                currentPage = _controller.page.round();
+                // currentPage = _controller.page.round();
+                print("current page view index: $index");
                 final volume = volumesList[index];
-                // currentVolume = volume;
-                // volumeState.updateVolumeTitle(volume);
+                currentVolume = volume;
+                volumeState.updateVolumeTitle(volume.volumeTitle);
                 final bool active = index == currentPage;
                 return Align(
                   alignment: Alignment.bottomCenter,
