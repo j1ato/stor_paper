@@ -17,6 +17,11 @@ class FavoriteButton extends StatelessWidget {
 
   final String storyID;
 
+      void _handleFavoriteStoriesChanged(String storyID, UserRepository userRepository) {
+        UserFavourites favorites = UserFavourites();
+        favorites.updateFavorites(userRepository.user.uid, storyID);
+    }
+
   @override
   Widget build(BuildContext context) {
     final userRepository = Provider.of<UserRepository>(context);
@@ -28,12 +33,8 @@ class FavoriteButton extends StatelessWidget {
         .document(userRepository.user.uid)
         .snapshots();
 
-    void _handleFavoriteStoriesChanged(String storyID) {
-      updateFavorites(userRepository.user.uid, storyID);
-    }
-
     return Positioned.fill(
-      bottom: 0,
+      bottom: 5,
           child: Align(
         alignment: AlignmentDirectional.bottomCenter,
             child: StreamBuilder(
@@ -45,7 +46,7 @@ class FavoriteButton extends StatelessWidget {
                 onPressed: () async {
                   await userRepository.checkConnectivity();
                   if (userRepository.isConnected == true) {
-                    _handleFavoriteStoriesChanged(storyID);
+                    _handleFavoriteStoriesChanged(storyID, userRepository);
                   } else {
                     Flushbars().connetivityFlushbar(context);
                   }
@@ -65,11 +66,6 @@ class FavoriteButton extends StatelessWidget {
               return RawMaterialButton(
                 constraints: BoxConstraints.tight(const Size(25, 25)),
                 onPressed: () => null,
-                // child: Icon(
-                //   Icons.favorite_border,
-                //   size: 12,
-                //   color: Colors.white.withOpacity(0.6),
-                // ),
                 elevation: 0,
                 fillColor: Color(0xF042444F),
                 shape: const CircleBorder(),

@@ -18,11 +18,6 @@ class FavoritesScreen extends StatelessWidget {
   const FavoritesScreen({Key key}) : super(key: key);
   static String id = 'favoriteStories';
 
-//   @override
-//   _FavoritesScreenState createState() => _FavoritesScreenState();
-// }
-
-// class _FavoritesScreenState extends State<FavoritesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,6 +35,5 @@ class FavoritesScreen extends StatelessWidget {
       ),
       //     body: _buildStories()),
     );
-    // );
   }
 }

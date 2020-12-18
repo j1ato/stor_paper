@@ -84,48 +84,50 @@ class _HomeScreenState extends State<HomeScreen> {
           data: Theme.of(context).copyWith(
             canvasColor: buildTheme().bottomAppBarColor,
           ),
-          child: BottomNavigationBar(
-              selectedItemColor: Colors.white.withOpacity(0.8),
-              unselectedItemColor: Colors.grey.shade700.withOpacity(0.5),
-              elevation: 0,
-              type: BottomNavigationBarType.shifting,
-              currentIndex: currentTabIndex,
-              onTap: (int index) {
-                setState(() {
-                  currentTabIndex = index;
-                  currentpage = pages[index];
-                });
-              },
-              items: [
-                BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.book,
-                      size: 25,
-                    ),
-                    title: const Text(
-                      '',
-                      style: TextStyle(fontSize: 0),
-                    )),
-                BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.favorite,
-                      size: 25,
-                    ),
-                    title: const Text(
-                      '',
-                      style: TextStyle(fontSize: 0),
-                    )),
-                BottomNavigationBarItem(
+          child: 
+          BottomNavigationBar(
+            selectedItemColor: Colors.white.withOpacity(0.8),
+            unselectedItemColor: Colors.grey.shade700.withOpacity(0.5),
+            elevation: 0,
+            type: BottomNavigationBarType.shifting,
+            currentIndex: currentTabIndex,
+            onTap: (int index) {
+              setState(() {
+                currentTabIndex = index;
+                currentpage = pages[index];
+              });
+            },
+            items: [
+              BottomNavigationBarItem(
                   icon: Icon(
-                    Icons.settings,
+                    Icons.book,
                     size: 25,
                   ),
                   title: const Text(
-                    ' ',
+                    '',
                     style: TextStyle(fontSize: 0),
+                  )),
+              BottomNavigationBarItem(
+                  icon: Icon(
+                    Icons.favorite,
+                    size: 25,
                   ),
-                )
-              ]),
+                  title: const Text(
+                    '',
+                    style: TextStyle(fontSize: 0),
+                  )),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.settings,
+                  size: 25,
+                ),
+                title: const Text(
+                  ' ',
+                  style: TextStyle(fontSize: 0),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

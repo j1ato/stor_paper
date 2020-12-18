@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stor_paper/model/database_models.dart';
 import 'package:stor_paper/providers/firestore.dart';
 import 'package:stor_paper/providers/user_repository.dart';
 
@@ -11,18 +12,19 @@ class ReadScreenFavoriteButton extends StatelessWidget {
 
   final String storyID;
 
+      void _handleFavoriteStoriesChanged(String storyID, UserRepository userRepository) {
+        UserFavourites favorites = UserFavourites();
+        favorites.updateFavorites(userRepository.user.uid, storyID);
+    }
+
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserRepository>(context);
+    final UserRepository user = Provider.of<UserRepository>(context);
     final Stream _userFavorites = Firestore.instance
         .collection('users')
         .document(user.user.uid)
         .snapshots();
-
-    void _handleFavoriteStoriesChanged(String storyID) {
-      updateFavorites(user.user.uid, storyID);
-    }
 
     return StreamBuilder(
       stream: _userFavorites,
@@ -36,7 +38,7 @@ class ReadScreenFavoriteButton extends StatelessWidget {
                 // constraints: BoxConstraints.tight(Size(40, 40)),
                 onPressed: () {
                   try {
-                    _handleFavoriteStoriesChanged(storyID);
+                    _handleFavoriteStoriesChanged(storyID, user);
                   } on Exception catch (e) {
                     print(e);
                   }

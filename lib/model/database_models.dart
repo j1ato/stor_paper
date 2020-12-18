@@ -13,15 +13,15 @@ class Volume {
   });
 
   factory Volume.fromFirestore(DocumentSnapshot singleVolume) {
-    final Map data = singleVolume.data;
+    final Map volumeMap = singleVolume.data;
 
     return Volume(
       id: singleVolume.documentID,
-      productID: data['productID'],
-      volumeTitle: data['volumeTitle'],
-      image: data['image'],
-      numberOfStories: data['numberOfStories'],
-      stories: List<Map>.from(data['stories']),
+      productID: volumeMap['productID'],
+      volumeTitle: volumeMap['volumeTitle'],
+      image: volumeMap['image'],
+      numberOfStories: volumeMap['numberOfStories'],
+      stories: List<Map>.from(volumeMap['stories']),
     );
   }
 

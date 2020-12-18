@@ -1,34 +1,63 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-// writes to firebase and updates users favorites 
+// writes to firebase and updates users favorites
 // in response to them favoriting stories
 // checks if favorites list exists and either adds
 // or removes stories from the list in firebase
 
-Future<void> updateFavorites(String uid, String storyId) {
- final DocumentReference favoritesReference =
-      Firestore.instance.collection('users').document(uid);
+class UserFavourites {
+  DocumentReference favoritesReference;
+  DocumentSnapshot favouritesSnapshot;
+  Firestore firestoreInstance = Firestore.instance;
 
-  return Firestore.instance.runTransaction((Transaction tx) async {
-    final DocumentSnapshot postSnapshot = await tx.get(favoritesReference);
-    if (postSnapshot.exists) {
-      if (!postSnapshot.data['favorites'].contains(storyId)) {
-        await tx.update(favoritesReference, <String, dynamic>{
-          'favorites': FieldValue.arrayUnion([storyId])
-        });
+  Future<void> updateFavorites(String userID, String storyID) {
+    favoritesReference = firestoreInstance.collection('users').document(userID);
+
+    return firestoreInstance
+        .runTransaction((Transaction favoritesTransaction) async {
+      favouritesSnapshot = await favoritesTransaction.get(favoritesReference);
+      if (favouritesSnapshot.exists) {
+        await addOrRemoveFavouritesFromArray(favouritesSnapshot, storyID,
+            favoritesTransaction, favoritesReference);
       } else {
-        await tx.update(favoritesReference, <String, dynamic>{
-          'favorites': FieldValue.arrayRemove([storyId])
-        });
+        await createFavouritesList(favoritesTransaction, storyID);
       }
+    }).catchError((error) {
+      print('Error: $error');
+    });
+  }
+
+  Future createFavouritesList(
+      Transaction favoritesTransaction, String storyId) async {
+    await favoritesTransaction.set(favoritesReference, {
+      'favorites': [storyId]
+    });
+  }
+
+  Future<void> addOrRemoveFavouritesFromArray(
+      DocumentSnapshot favouritesSnapshot,
+      String storyID,
+      Transaction favoritesTransaction,
+      DocumentReference favoritesReference) async {
+    if (!favouritesSnapshot.data['favorites'].contains(storyID)) {
+      await addFavouriteToArray(
+          favoritesTransaction, favoritesReference, storyID);
     } else {
-      await tx.set(favoritesReference, {
-        'favorites': [storyId]
-      });
+      await removeFavouriteFromArray(favoritesTransaction, favoritesReference, storyID);
     }
-  }).catchError((error) {
-    print('Error: $error');
-  });
+  }
+
+  Future removeFavouriteFromArray(Transaction favoritesTransaction,
+      DocumentReference favoritesReference, String storyId) async {
+    await favoritesTransaction.update(favoritesReference, <String, dynamic>{
+      'favorites': FieldValue.arrayRemove([storyId])
+    });
+  }
+
+  Future<void> addFavouriteToArray(Transaction favoritesTransaction,
+      DocumentReference favoritesReference, String storyID) async {
+    await favoritesTransaction.update(favoritesReference, <String, dynamic>{
+      'favorites': FieldValue.arrayUnion([storyID])
+    });
+  }
 }
-
-

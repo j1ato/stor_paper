@@ -12,9 +12,10 @@ class StoryExpandButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Positioned(
-      left: 30,
-      bottom: 0,
+      left: 10,
+      bottom: 5,
           child: RawMaterialButton(
         constraints: BoxConstraints.tight(const Size(25, 25)),
         onPressed: () {

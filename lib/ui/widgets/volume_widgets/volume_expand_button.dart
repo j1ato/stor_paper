@@ -34,11 +34,11 @@ class ExpandButton extends StatelessWidget {
         },
         child: Icon(
           Icons.fullscreen,
-          size: 20,
+          size: 12,
           color: Colors.white.withOpacity(0.6),
         ),
         elevation: 0,
-        fillColor: Color(0xF017171B),
+        fillColor: Color(0xF042444F),
         shape: const CircleBorder(),
       ),
     );

@@ -22,7 +22,7 @@ class VolumesCardList extends StatefulWidget {
 class _VolumesCardListState extends State<VolumesCardList> {
   int currentPage = 0;
 
-  final PageController _controller = PageController(viewportFraction: 1);
+  final PageController _controller = PageController(viewportFraction: 0.93);
 
   @override
   void initState() {
@@ -42,11 +42,10 @@ class _VolumesCardListState extends State<VolumesCardList> {
   Widget build(BuildContext context) {
     final volumesList = Provider.of<List<Volume>>(context);
     final volumeState = Provider.of<VolumeScreenState>(context, listen: false);
-    // Provider.of<VolumeScreenState>(context,listen: false).updateVolumeScreenState(_controller);
+
     Volume currentVolume;
 
-    return Scaffold(
-        body: Stack(
+    return Stack(
       children: [
         if (volumeState.volumeTitle != null) ...[
           ResponsiveScreenTitle(
@@ -59,42 +58,39 @@ class _VolumesCardListState extends State<VolumesCardList> {
           ),
         ],
         if (volumesList != null) ...[
-          Positioned.fill(
-            bottom: 20,
-            child: PageView.builder(
-              controller: _controller,
-              physics: const AlwaysScrollableScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              itemCount: volumesList.length,
-              itemBuilder: (context, index) {
-                // currentPage = _controller.page.round();
-                print("current page view index: $index");
-                final volume = volumesList[index];
-                currentVolume = volume;
-                volumeState.updateVolumeTitle(volume.volumeTitle);
-                final bool active = index == currentPage;
-                return Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 30),
-                    child: VolumeCards(
-                      controller: _controller,
-                      volumeTitle: volume.volumeTitle,
-                      image: volume.image,
-                      numberOfStories: volume.numberOfStories,
-                      stories: volume.stories,
-                      productID: volume.productID,
-                      index: index,
-                      state: active,
-                    ),
+          PageView.builder(
+            controller: _controller,
+            physics: const AlwaysScrollableScrollPhysics(),
+            scrollDirection: Axis.horizontal,
+            itemCount: volumesList.length,
+            itemBuilder: (context, index) {
+              print("current page view index: $index");
+              final volume = volumesList[index];
+              currentVolume = volume;
+              volumeState.updateVolumeTitle(volume.volumeTitle);
+              final bool active = index == currentPage;
+              return Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 30),
+                  child: VolumeCards(
+                    controller: _controller,
+                    volumeTitle: volume.volumeTitle,
+                    image: volume.image,
+                    numberOfStories: volume.numberOfStories,
+                    stories: volume.stories,
+                    productID: volume.productID,
+                    index: index,
+                    state: active,
                   ),
-                );
-              },
-            ),
+                ),
+              );
+            },
           ),
+          // ),
         ],
         if (volumesList == null) ...[],
       ],
-    ));
+    );
   }
 }
