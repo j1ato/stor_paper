@@ -17,7 +17,7 @@ class UserFavourites {
         .runTransaction((Transaction favoritesTransaction) async {
       favouritesSnapshot = await favoritesTransaction.get(favoritesReference);
       if (favouritesSnapshot.exists) {
-        await addOrRemoveFavouritesFromArray(favouritesSnapshot, storyID,
+        await updateFavourites(favouritesSnapshot, storyID,
             favoritesTransaction, favoritesReference);
       } else {
         await createFavouritesList(favoritesTransaction, storyID);
@@ -34,27 +34,27 @@ class UserFavourites {
     });
   }
 
-  Future<void> addOrRemoveFavouritesFromArray(
+  Future<void> updateFavourites(
       DocumentSnapshot favouritesSnapshot,
       String storyID,
       Transaction favoritesTransaction,
       DocumentReference favoritesReference) async {
     if (!favouritesSnapshot.data['favorites'].contains(storyID)) {
-      await addFavouriteToArray(
+      await addFavourite(
           favoritesTransaction, favoritesReference, storyID);
     } else {
-      await removeFavouriteFromArray(favoritesTransaction, favoritesReference, storyID);
+      await removeFavourite(favoritesTransaction, favoritesReference, storyID);
     }
   }
 
-  Future removeFavouriteFromArray(Transaction favoritesTransaction,
+  Future removeFavourite(Transaction favoritesTransaction,
       DocumentReference favoritesReference, String storyId) async {
     await favoritesTransaction.update(favoritesReference, <String, dynamic>{
       'favorites': FieldValue.arrayRemove([storyId])
     });
   }
 
-  Future<void> addFavouriteToArray(Transaction favoritesTransaction,
+  Future<void> addFavourite(Transaction favoritesTransaction,
       DocumentReference favoritesReference, String storyID) async {
     await favoritesTransaction.update(favoritesReference, <String, dynamic>{
       'favorites': FieldValue.arrayUnion([storyID])

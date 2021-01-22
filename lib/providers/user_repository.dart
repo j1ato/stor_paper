@@ -69,7 +69,7 @@ class UserRepository extends ChangeNotifier {
     }
   }
 
-  dynamic sendVerificationEmail(BuildContext context) async {
+  Future<void> sendVerificationEmail(BuildContext context) async {
     _user = await _auth
         .currentUser()
         .catchError((onError) => print('this is the error: ${onError.code}'));

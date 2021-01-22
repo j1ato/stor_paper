@@ -36,8 +36,8 @@ class _LockedVolumeContainerState extends State<LockedVolumeContainer> {
         widget.state ? 0.75 * screenHeight : 0.65 * screenHeight;
     final containerWidth =
         widget.state ? 0.92 * screenWidth : 0.9 * screenWidth;
-    final double blur = widget.state ? 30 : 0;
-    final double offset = widget.state ? 5 : 0;
+    final double blur = widget.state ? 30.0 : 0.0;
+    final double offset = widget.state ? 5.0 : 0.0;
 
     return Stack(
       children: <Widget>[

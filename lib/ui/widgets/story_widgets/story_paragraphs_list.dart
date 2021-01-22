@@ -21,19 +21,22 @@ class StoryParagraphs extends StatefulWidget {
 }
 
 class _StoryParagraphsState extends State<StoryParagraphs> {
-  ScrollController _storyController;
   double initialScroll;
   double _textSize = 16;
   bool _isVisible;
+  ScrollController _storyController;
+  AllSharedPrefs sharedPrefs = AllSharedPrefs();
 
   @override
   void initState() {
     super.initState();
     _isVisible = true;
-    AllSharedPrefs().readOffset(widget.stories['id']).then((value) {
-      _storyController = ScrollController(initialScrollOffset: value);
-    });
-    AllSharedPrefs().readTextSize('TextSize').then(
+    sharedPrefs.readOffset(widget.stories['id']).then(
+      (savedOffset) {
+        _storyController = ScrollController(initialScrollOffset: savedOffset);
+      },
+    );
+    sharedPrefs.readTextSize('TextSize').then(
       (savedTextSize) {
         setState(
           () {
@@ -109,12 +112,13 @@ class _StoryParagraphsState extends State<StoryParagraphs> {
     }
 
     final List<Widget> textElements = [];
-    for (final paragraph in widget.storyParagraphs) {
+    for (final String paragraph in widget.storyParagraphs) {
       textElements.add(
         Text(
-          paragraph,
+          paragraph.replaceAll("\\n  ", "\n\n\n"),
+          textAlign: TextAlign.justify,
           style: TextStyle(
-            fontFamily: 'OpenSans',
+            fontFamily: 'RobotoSlab',
             fontSize: _textSize,
             color: Colors.black.withOpacity(0.6),
           ),
@@ -189,7 +193,7 @@ class _StoryParagraphsState extends State<StoryParagraphs> {
         physics: const BouncingScrollPhysics(
             parent: AlwaysScrollableScrollPhysics()),
         controller: _storyController,
-        padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+        padding: const EdgeInsets.fromLTRB(28, 0, 28, 0),
         children: textElements,
       ),
     );

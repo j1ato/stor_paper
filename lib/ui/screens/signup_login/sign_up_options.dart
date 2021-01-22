@@ -11,7 +11,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../../theme.dart';
 
 // gives options for user to either sign in with google
-// facebook or through creating an account by email 
+// facebook or through creating an account by email
 
 class SignUpOptionsScreen extends StatefulWidget {
   static String id = 'register options';
@@ -28,9 +28,11 @@ class _SignUpOptionsScreenState extends State<SignUpOptionsScreen> {
     final user = Provider.of<UserRepository>(context);
 
     Text _buildLogo() {
-      return Text('Welcome', style: buildTheme().textTheme.headline1,);
-          }
-
+      return Text(
+        'Welcome',
+        style: buildTheme().textTheme.headline1,
+      );
+    }
 
     return Scaffold(
       body: SafeArea(
@@ -42,8 +44,9 @@ class _SignUpOptionsScreenState extends State<SignUpOptionsScreen> {
                 ),
               )
             : Center(
-              child: ListView(
-                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 150),
+                child: ListView(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 50, vertical: 150),
                   children: <Widget>[
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -71,7 +74,8 @@ class _SignUpOptionsScreenState extends State<SignUpOptionsScreen> {
                           },
                         ),
                         SignInButton(Buttons.Facebook,
-                            text: 'Continue with Facebook', onPressed: () async {
+                            text: 'Continue with Facebook',
+                            onPressed: () async {
                           await user.checkConnectivity();
                           if (user.isConnected == true) {
                             await user.signInWithFacebook();
@@ -106,7 +110,7 @@ class _SignUpOptionsScreenState extends State<SignUpOptionsScreen> {
                     ),
                   ],
                 ),
-            ),
+              ),
       ),
     );
   }
