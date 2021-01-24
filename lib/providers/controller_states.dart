@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:stor_paper/model/database_models.dart';
 
 class VolumeScreenState extends ChangeNotifier {
   double _offset;

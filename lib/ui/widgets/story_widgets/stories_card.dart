@@ -15,10 +15,10 @@ import '../shared_widgets/info_button.dart';
 // user can expand to view artwork, favorite the story
 // find out more info or tap to read the story
 
-class StoriesCard extends StatefulWidget {
-  const StoriesCard({
+class StoryCard extends StatefulWidget {
+  const StoryCard({
     Key key,
-    this.stories,
+    this.story,
     this.imageURL,
     this.inFavorites,
     this.onFavoriteButtonPressed,
@@ -26,7 +26,7 @@ class StoriesCard extends StatefulWidget {
     this.context,
   }) : super(key: key);
 
-  final Map stories;
+  final Map story;
   final Future imageURL;
   final bool inFavorites;
   final Function onFavoriteButtonPressed;
@@ -34,10 +34,10 @@ class StoriesCard extends StatefulWidget {
   final BuildContext context;
 
   @override
-  _StoriesCardState createState() => _StoriesCardState();
+  _StoryCardState createState() => _StoryCardState();
 }
 
-class _StoriesCardState extends State<StoriesCard> {
+class _StoryCardState extends State<StoryCard> {
   double opacityLevel = 0.0;
 
   void _changeOpacity() {
@@ -61,7 +61,7 @@ class _StoriesCardState extends State<StoriesCard> {
           padding: const EdgeInsets.only(bottom: 65),
           child: Center(
             child: Container(
-              height: pageHeight * 0.55,
+              height: pageHeight * 0.53,
               width: pageWidth * 0.9,
               decoration: BoxDecoration(
                 color: Colors.white.withOpacity(0.1),
@@ -75,7 +75,7 @@ class _StoriesCardState extends State<StoriesCard> {
           ),
         );
       },
-      imageUrl: widget.stories['image'],
+      imageUrl: widget.story['image'],
       imageBuilder: (context, imageProvider) {
         return Padding(
           padding: const EdgeInsets.only(bottom: 65),
@@ -86,7 +86,7 @@ class _StoriesCardState extends State<StoriesCard> {
                 MaterialPageRoute(
                   builder: (context) => ReadStory(
                     key: const PageStorageKey('ReadStory'),
-                    stories: widget.stories,
+                    stories: widget.story,
                     inFavorites: widget.inFavorites,
                     onFavoriteButtonPressed: widget.onFavoriteButtonPressed,
                   ),
@@ -94,7 +94,7 @@ class _StoriesCardState extends State<StoriesCard> {
               );
             },
             child: Hero(
-              tag: widget.stories['id'],
+              tag: widget.story['id'],
               child: Align(
                 alignment: Alignment.center,
                 child: Container(
@@ -103,7 +103,7 @@ class _StoriesCardState extends State<StoriesCard> {
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.blueGrey.withOpacity(0.6),
+                        color: Colors.blueGrey.withOpacity(0.2),
                         blurRadius: 8,
                         offset: Offset(2, 2),
                       )
@@ -124,7 +124,7 @@ class _StoriesCardState extends State<StoriesCard> {
                           height: pageHeight * 0.53,
                           width: pageWidth * 0.9,
                           decoration: BoxDecoration(
-                            color: Colors.purple,
+                            color: Colors.black87,
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.blueGrey.withOpacity(0.6),
@@ -146,12 +146,12 @@ class _StoriesCardState extends State<StoriesCard> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(widget.stories['storyTitle'],
+                                Text(widget.story['storyTitle'],
                                     style: buildTheme().textTheme.subtitle1),
                                 SizedBox(
                                   height: 10,
                                 ),
-                                Text(widget.stories['blurb'],
+                                Text(widget.story['blurb'],
                                     style: buildTheme().textTheme.bodyText2),
                               ],
                             ),
@@ -168,17 +168,17 @@ class _StoriesCardState extends State<StoriesCard> {
                           });
                         },
                         child: FavoriteButton(
-                          storyID: widget.stories['id'],
+                          storyID: widget.story['id'],
                         ),
                       ),
                       StoryExpandButton(
-                        storyID: widget.stories['id'],
-                        imageURL: widget.stories['image'],
+                        storyID: widget.story['id'],
+                        imageURL: widget.story['image'],
                       ),
                       InfoButton(
                         type: 'story card',
-                        title: widget.stories['storyTitle'],
-                        info: widget.stories['blurb'],
+                        title: widget.story['storyTitle'],
+                        info: widget.story['blurb'],
                         onPressed: () => _changeOpacity(),
                       ),
                     ],

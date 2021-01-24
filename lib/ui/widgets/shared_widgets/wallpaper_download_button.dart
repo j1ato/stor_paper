@@ -3,7 +3,6 @@ import 'package:image_downloader/image_downloader.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:stor_paper/ui/widgets/popup_dialogs/flushbars.dart';
 
-
 // button that intiates download after checking user persmissions
 // once image downloaded user is prompted to view the download
 
@@ -25,12 +24,6 @@ class DownloadButton extends StatefulWidget {
 class _DownloadButtonState extends State<DownloadButton> {
   PermissionStatus _status;
 
-  Future<void> _downloadImage() async {
-    final imageId = await ImageDownloader.downloadImage(widget.imageString);
-    final path = await ImageDownloader.findPath(imageId);
-     await ImageDownloader.open(path);
-  }
-
   @override
   void initState() {
     super.initState();
@@ -40,12 +33,10 @@ class _DownloadButtonState extends State<DownloadButton> {
         .then(_updateStatus);
   }
 
-  void _updateStatus(PermissionStatus status) {
-    if (status != _status) {
-      setState(() {
-        _status = status;
-      });
-    }
+  Future<void> _downloadImage() async {
+    final imageId = await ImageDownloader.downloadImage(widget.imageString);
+    final path = await ImageDownloader.findPath(imageId);
+    await ImageDownloader.open(path);
   }
 
   void _requestPermission() {
@@ -54,8 +45,15 @@ class _DownloadButtonState extends State<DownloadButton> {
   }
 
   void _onPermissionRequested(Map<PermissionGroup, PermissionStatus> statuses) {
-    final status = statuses[PermissionGroup.storage];
-    _updateStatus(status);
+    _updateStatus(statuses[PermissionGroup.storage]);
+  }
+
+  void _updateStatus(PermissionStatus status) {
+    if (status != _status) {
+      setState(() {
+        _status = status;
+      });
+    }
   }
 
   @override

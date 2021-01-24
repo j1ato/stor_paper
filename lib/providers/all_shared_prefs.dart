@@ -6,29 +6,25 @@ import 'package:shared_preferences/shared_preferences.dart';
 // convert to change notifier
 
 class AllSharedPrefs extends ChangeNotifier {
-  static double value;
 
   Future<void> saveOffset(String storyKey, double scrollPosition) async {
     final prefs = await SharedPreferences.getInstance();
     final value = scrollPosition;
-    AllSharedPrefs.value = scrollPosition;
     await prefs.setDouble(storyKey, value);
   }
 
   Future<void> saveTextSize(String storyKey, double textSize) async {
     final prefs = await SharedPreferences.getInstance();
-    final value = textSize;
-    await prefs.setDouble(storyKey, value);
+    await prefs.setDouble(storyKey, textSize);
   }
 
   Future<double> readOffset(String storyKey) async {
     final prefs = await SharedPreferences.getInstance();
-    return value = prefs.getDouble(storyKey) ?? 0;
+    return prefs.getDouble(storyKey) ?? 0;
   }
 
   Future<double> readTextSize(String storyKey) async {
     final prefs = await SharedPreferences.getInstance();
-    final value = prefs.getDouble(storyKey) ?? 15;
-    return value;
+    return prefs.getDouble(storyKey) ?? 15;
   }
 }

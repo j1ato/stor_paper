@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:provider/provider.dart';
-import 'package:stor_paper/providers/controller_states.dart';
 import 'package:stor_paper/ui/screens/volume_screens/stories.dart';
 import '../../theme.dart';
 import 'volume_expand_button.dart';

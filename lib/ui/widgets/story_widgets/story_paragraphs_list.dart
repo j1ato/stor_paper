@@ -23,14 +23,12 @@ class StoryParagraphs extends StatefulWidget {
 class _StoryParagraphsState extends State<StoryParagraphs> {
   double initialScroll;
   double _textSize = 16;
-  bool _isVisible;
   ScrollController _storyController;
   AllSharedPrefs sharedPrefs = AllSharedPrefs();
 
   @override
   void initState() {
     super.initState();
-    _isVisible = true;
     sharedPrefs.readOffset(widget.stories['id']).then(
       (savedOffset) {
         _storyController = ScrollController(initialScrollOffset: savedOffset);
@@ -88,23 +86,12 @@ class _StoryParagraphsState extends State<StoryParagraphs> {
 
             AllSharedPrefs().saveOffset(widget.stories['id'], position);
             print(position);
-            if (_isVisible == true) {
-              setState(() {
-                _isVisible = false;
-              });
-            }
           } else {
             if (_storyController.position.userScrollDirection ==
                 ScrollDirection.forward) {
               final double position = _storyController.position.pixels;
               AllSharedPrefs().saveOffset(widget.stories['id'], position);
               print(position);
-
-              if (_isVisible == false) {
-                setState(() {
-                  _isVisible = true;
-                });
-              }
             }
           }
         },
@@ -112,6 +99,7 @@ class _StoryParagraphsState extends State<StoryParagraphs> {
     }
 
     final List<Widget> textElements = [];
+
     for (final String paragraph in widget.storyParagraphs) {
       textElements.add(
         Text(
@@ -132,61 +120,55 @@ class _StoryParagraphsState extends State<StoryParagraphs> {
     }
 
     return Scaffold(
-      floatingActionButton: Visibility(
-          visible: _isVisible,
-          child: ReadScreenFavoriteButton(
-            storyID: widget.stories['id'],
-          )),
+      floatingActionButton: ReadScreenFavoriteButton(
+        storyID: widget.stories['id'],
+      ),
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
-        child: Visibility(
-          visible: _isVisible,
-          child: AppBar(
-            title: Text(
-              widget.stories['storyTitle'],
-              style: buildTheme().textTheme.headline2,
-            ),
-            centerTitle: true,
-            leading: IconButton(
-              icon: Icon(
-                Icons.arrow_back,
-                size: 25,
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-            actions: <Widget>[
-              PopupMenuButton(
-                onSelected: (value) {
-                  if (value == 1) {
-                    _showFontSizePickerDialog();
-                  } else if (value == 2) {
-                    _showGlossaryDialog();
-                  }
-                },
-                onCanceled: null,
-                itemBuilder: (BuildContext context) =>
-                    <PopupMenuEntry<dynamic>>[
-                  PopupMenuItem<dynamic>(
-                    value: 1,
-                    child: Text(
-                      'Text Size',
-                      style: buildTheme().textTheme.bodyText2,
-                    ),
-                  ),
-                  PopupMenuItem<dynamic>(
-                    value: 2,
-                    child: Text(
-                      'Glossary',
-                      style: buildTheme().textTheme.bodyText2,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-            backgroundColor: buildTheme().appBarTheme.color,
+        child: AppBar(
+          title: Text(
+            widget.stories['storyTitle'],
+            style: buildTheme().textTheme.headline2,
           ),
+          centerTitle: true,
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+              size: 25,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          actions: <Widget>[
+            PopupMenuButton(
+              onSelected: (value) {
+                if (value == 1) {
+                  _showFontSizePickerDialog();
+                } else if (value == 2) {
+                  _showGlossaryDialog();
+                }
+              },
+              onCanceled: null,
+              itemBuilder: (BuildContext context) => <PopupMenuEntry<dynamic>>[
+                PopupMenuItem<dynamic>(
+                  value: 1,
+                  child: Text(
+                    'Text Size',
+                    style: buildTheme().textTheme.bodyText2,
+                  ),
+                ),
+                PopupMenuItem<dynamic>(
+                  value: 2,
+                  child: Text(
+                    'Glossary',
+                    style: buildTheme().textTheme.bodyText2,
+                  ),
+                ),
+              ],
+            ),
+          ],
+          backgroundColor: buildTheme().appBarTheme.color,
         ),
       ),
       body: ListView(

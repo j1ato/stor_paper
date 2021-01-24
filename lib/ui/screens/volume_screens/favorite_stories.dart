@@ -1,13 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:stor_paper/model/database_models.dart';
-import 'package:stor_paper/providers/controller_states.dart';
-import 'package:stor_paper/ui/theme.dart';
 import 'package:stor_paper/ui/widgets/shared_widgets/responsive_screen_title.dart';
 import 'package:stor_paper/ui/widgets/story_widgets/favorite_stories_builder.dart';
-import 'package:stor_paper/ui/widgets/story_widgets/stories_card.dart';
-import 'package:provider/provider.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 // Connects to story ids located within a volume in firebase and compares
 // them to story ids within the users favorited list of stories
@@ -26,7 +19,7 @@ class FavoritesScreen extends StatelessWidget {
           Container(
             child: FavoritesStoriesBuilder(),
           ),
-          ResponsiveScreenTitle(
+          ResponsiveTitle(
             key: UniqueKey(),
             title: 'SII\'s',
             type: 'FS',

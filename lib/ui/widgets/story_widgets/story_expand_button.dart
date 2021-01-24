@@ -35,7 +35,7 @@ class StoryExpandButton extends StatelessWidget {
           color: Colors.white.withOpacity(0.6),
         ),
         elevation: 0,
-        fillColor: Color(0xF042444F),
+        fillColor: Colors.black87.withOpacity(0.8),
         shape: const CircleBorder(),
       ),
     );

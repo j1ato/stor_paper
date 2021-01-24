@@ -12,11 +12,11 @@ class ReadScreenFavoriteButton extends StatelessWidget {
 
   final String storyID;
 
-      void _handleFavoriteStoriesChanged(String storyID, UserRepository userRepository) {
-        UserFavourites favorites = UserFavourites();
-        favorites.updateFavorites(userRepository.user.uid, storyID);
-    }
-
+  void _handleFavoriteStoriesChanged(
+      String storyID, UserRepository userRepository) {
+    UserFavourites favorites = UserFavourites();
+    favorites.updateFavorites(userRepository.user.uid, storyID);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,6 @@ class ReadScreenFavoriteButton extends StatelessWidget {
             width: 55,
             child: FittedBox(
               child: FloatingActionButton(
-                // constraints: BoxConstraints.tight(Size(40, 40)),
                 onPressed: () {
                   try {
                     _handleFavoriteStoriesChanged(storyID, user);
@@ -64,4 +63,3 @@ class ReadScreenFavoriteButton extends StatelessWidget {
     );
   }
 }
-

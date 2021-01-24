@@ -48,12 +48,12 @@ class _VolumesCardListState extends State<VolumesCardList> {
     return Stack(
       children: [
         if (volumeState.volumeTitle != null) ...[
-          ResponsiveScreenTitle(
+          ResponsiveTitle(
             title: volumeState.volumeTitle,
           ),
         ],
         if (volumeState.volumeTitle == null) ...[
-          ResponsiveScreenTitle(
+          ResponsiveTitle(
             title: "I",
           ),
         ],

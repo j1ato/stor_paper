@@ -17,24 +17,24 @@ class UserFavourites {
         .runTransaction((Transaction favoritesTransaction) async {
       favouritesSnapshot = await favoritesTransaction.get(favoritesReference);
       if (favouritesSnapshot.exists) {
-        await updateFavourites(favouritesSnapshot, storyID,
+        await toggleFavourites(favouritesSnapshot, storyID,
             favoritesTransaction, favoritesReference);
       } else {
-        await createFavouritesList(favoritesTransaction, storyID);
+        await createFavourites(favoritesTransaction, storyID);
       }
     }).catchError((error) {
       print('Error: $error');
     });
   }
 
-  Future createFavouritesList(
+  Future createFavourites(
       Transaction favoritesTransaction, String storyId) async {
     await favoritesTransaction.set(favoritesReference, {
       'favorites': [storyId]
     });
   }
 
-  Future<void> updateFavourites(
+  Future<void>toggleFavourites(
       DocumentSnapshot favouritesSnapshot,
       String storyID,
       Transaction favoritesTransaction,
@@ -47,7 +47,7 @@ class UserFavourites {
     }
   }
 
-  Future removeFavourite(Transaction favoritesTransaction,
+  Future<void>removeFavourite(Transaction favoritesTransaction,
       DocumentReference favoritesReference, String storyId) async {
     await favoritesTransaction.update(favoritesReference, <String, dynamic>{
       'favorites': FieldValue.arrayRemove([storyId])

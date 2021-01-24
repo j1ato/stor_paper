@@ -4,8 +4,8 @@ import 'package:stor_paper/providers/controller_states.dart';
 
 import '../../theme.dart';
 
-class ResponsiveScreenTitle extends StatelessWidget {
-  const ResponsiveScreenTitle(
+class ResponsiveTitle extends StatelessWidget {
+  const ResponsiveTitle(
       {Key key, this.scrollState, this.title, this.type})
       : super(key: key);
 
