@@ -9,8 +9,7 @@ class AllSharedPrefs extends ChangeNotifier {
 
   Future<void> saveOffset(String storyKey, double scrollPosition) async {
     final prefs = await SharedPreferences.getInstance();
-    final value = scrollPosition;
-    await prefs.setDouble(storyKey, value);
+    await prefs.setDouble(storyKey, scrollPosition);
   }
 
   Future<void> saveTextSize(String storyKey, double textSize) async {
