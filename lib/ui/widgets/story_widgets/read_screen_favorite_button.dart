@@ -49,7 +49,6 @@ class ReadScreenFavoriteButton extends StatelessWidget {
                   size: 18,
                   color: Colors.white.withOpacity(0.6),
                 ),
-
                 elevation: 0,
                 backgroundColor: const Color(0xF0111114).withOpacity(0.8),
                 shape: const CircleBorder(),
