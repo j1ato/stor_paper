@@ -5,14 +5,12 @@ import 'package:flutter/material.dart';
 import '../model/database_models.dart';
 
 class DatabaseServices extends ChangeNotifier {
-  final Firestore _db = Firestore.instance;
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
 
 
   Stream<List<Volume>> streamVolumes() {
     final volumes = _db.collection('Volumes');
-    return volumes.snapshots().map((volumesList) => volumesList.documents
-        .map((singleVolume) => Volume.fromFirestore(singleVolume))
-        .toList());
+    return volumes.snapshots().map((volumesList) => volumesList.documents.map((singleVolume) => Volume.fromFirestore(singleVolume)).toList());
   }
 
   Stream<UserFavorites> streamFavorites(FirebaseUser user) {

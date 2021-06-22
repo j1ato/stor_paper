@@ -36,7 +36,6 @@ dependencies:
   cloud_firestore: ^2.0.0
   shared_preferences: ^2.0.5
   firebase_storage: ^8.0.5
-  memoize: ^3.0.0
   font_awesome_flutter: ^9.0.0
   url_launcher: ^6.0.3
   flushbar: ^1.10.4

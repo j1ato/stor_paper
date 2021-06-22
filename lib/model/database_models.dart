@@ -13,10 +13,10 @@ class Volume {
   });
 
   factory Volume.fromFirestore(DocumentSnapshot singleVolume) {
-    final Map volumeMap = singleVolume.data;
+    final Map<String, dynamic> volumeMap = singleVolume.data() as Map<String, dynamic>;
 
     return Volume(
-      id: singleVolume.documentID,
+      id: singleVolume.id,
       productID: volumeMap['productID'],
       volumeTitle: volumeMap['volumeTitle'],
       image: volumeMap['image'],
@@ -25,12 +25,12 @@ class Volume {
     );
   }
 
-  final String id;
-  final String productID;
-  final String volumeTitle;
-  final String image;
-  final String numberOfStories;
-  final List<Map> stories;
+  final String? id;
+  final String? productID;
+  final String? volumeTitle;
+  final String? image;
+  final String? numberOfStories;
+  final List<Map>? stories;
 
 }
 
@@ -47,7 +47,7 @@ class UserFavorites {
     );
   }
 
-  final List favorites;
+  final List? favorites;
 }
 
 class Story {
@@ -74,11 +74,11 @@ class Story {
     );
   }
 
-  final String id;
-  final String blurb;
-  final List glossary;
-  final String image;
-  final List paragraphs;
-  final String readTime;
-  final String storyTitle;
+  final String? id;
+  final String? blurb;
+  final List? glossary;
+  final String? image;
+  final List? paragraphs;
+  final String? readTime;
+  final String? storyTitle;
 }

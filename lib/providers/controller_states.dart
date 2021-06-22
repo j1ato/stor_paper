@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class VolumeScreenState extends ChangeNotifier {
-  double _offset;
-  double _page;
-  String _volumeTitle;
+  double _offset = 0;
+  double? _page = 0;
+  String? _volumeTitle;
 
   void updateVolumeScreenState(PageController pageController) {
     pageController.addListener(
@@ -22,8 +22,8 @@ class VolumeScreenState extends ChangeNotifier {
   }
 
   double get offset => _offset;
-  double get page => _page;
-  String get volumeTitle => _volumeTitle;
+  double? get page => _page;
+  String? get volumeTitle => _volumeTitle;
 }
 
 class StoriesScreenState extends ChangeNotifier {
