@@ -17,14 +17,14 @@ class UserRepository extends ChangeNotifier {
   UserRepository() : super();
 
   UserRepository.instance() : _auth = FirebaseAuth.instance {
-    _auth.onAuthStateChanged.listen(_onAuthStateChanged);
+    _auth.authStateChanges().listen(_onAuthStateChanged);
     getCurrentUser();
   }
 
   Status _status = Status.unauthenticated;
   FirebaseAuth _auth;
-  FirebaseUser _user;
-  FacebookLogin _login;
+  User? _user;
+  FacebookLogin? _login;
   GoogleSignIn _googleSignIn;
   AuthCredential _authCredential;
   FacebookAccessToken _fBookAccessToken;
@@ -35,7 +35,7 @@ class UserRepository extends ChangeNotifier {
   bool _isConnected;
 
   Status get status => _status;
-  FirebaseUser get user => _user;
+  User? get user => _user;
   bool get signUpError => _signUpError;
   bool get isConnected => _isConnected;
   bool get verificationSent => _verificationSent;
@@ -332,7 +332,8 @@ class UserRepository extends ChangeNotifier {
     _status = Status.authenticating;
     notifyListeners();
     _user =
-        await _auth.currentUser().catchError((onError) => print(onError.code));
+        await _auth.currentUser();
+    .catchError((onError) => print(onError.code));
     await _user.reload().catchError((onError) => print(onError.code));
     _user =
         await _auth.currentUser().catchError((onError) => print(onError.code));
@@ -363,7 +364,7 @@ class UserRepository extends ChangeNotifier {
     }
   }
 
-  Future<void> _onAuthStateChanged(FirebaseUser firebaseUser) async {
+  Future<void> _onAuthStateChanged(User? firebaseUser) async {
     if (firebaseUser == null) {
       _status = Status.unauthenticated;
     } else {
@@ -374,17 +375,16 @@ class UserRepository extends ChangeNotifier {
 
   Future<void> createFavorites() async {
     if (_user != null) {
-      final DocumentSnapshot querySnapshot = await Firestore.instance
+      final DocumentSnapshot querySnapshot = await FirebaseFirestore.instance
           .collection('users')
-          .document(_user.uid)
+          .doc(_user.uid)
           .get();
 
       if (!querySnapshot.exists) {
-        print('hmmmmmm');
-        await Firestore.instance
+        await FirebaseFirestore.instance
             .collection('users')
-            .document(_user.uid)
-            .setData({'favorites': []});
+            .doc(_user.uid)
+            .set({'favorites': []});
       }
     } else {
       return print(

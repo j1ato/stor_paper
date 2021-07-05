@@ -7,18 +7,16 @@ import '../model/database_models.dart';
 class DatabaseServices extends ChangeNotifier {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-
   Stream<List<Volume>> streamVolumes() {
-    final volumes = _db.collection('Volumes');
-    return volumes.snapshots().map((volumesList) => volumesList.documents.map((singleVolume) => Volume.fromFirestore(singleVolume)).toList());
+    return _db.collection('Volumes').snapshots().map((volumesList) =>
+        volumesList.docs
+            .map((singleVolume) => Volume.fromFirestore(singleVolume))
+            .toList());
   }
 
-  Stream<UserFavorites> streamFavorites(FirebaseUser user) {
+  Stream<UserFavorites> streamFavorites(User user) {
     print('this is the users id: ${user.uid}');
-    return _db
-        .collection('users')
-        .document(user.uid)
-        .snapshots()
-        .map((singleUser) => UserFavorites.fromFirestore(singleUser.data));
+    return _db.collection('users').doc(user.uid).snapshots().map((singleUser) =>
+        UserFavorites.fromFirestore(singleUser.data() as Map<String, dynamic>));
   }
 }

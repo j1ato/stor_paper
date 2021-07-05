@@ -6,9 +6,9 @@ import '../story_widgets/glossary.dart';
 // african language
 
 class GlossaryAlertDialog extends StatelessWidget {
-  const GlossaryAlertDialog({Key key, this.glossaryItems, })
+  const GlossaryAlertDialog({Key? key, this.glossaryItems, })
       : super(key: key);
-  final List<dynamic> glossaryItems;
+  final List<dynamic>? glossaryItems;
 
     @override
   Widget build(BuildContext context) {

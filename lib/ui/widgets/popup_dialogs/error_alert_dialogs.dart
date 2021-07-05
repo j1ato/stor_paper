@@ -7,7 +7,7 @@ import '../../theme.dart';
 
 class ErrorAlertDialog extends StatelessWidget {
   const ErrorAlertDialog({this.errorMessage});
-  final String errorMessage;
+  final String? errorMessage;
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
